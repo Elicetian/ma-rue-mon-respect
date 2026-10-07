@@ -16,12 +16,18 @@
           if (el.__onReveal) el.__onReveal();
           el.classList.add('in');
         });
-      }, { threshold: 0.25 })
+      }, { threshold: 0.1 })
     : null;
 
+  /* Plusieurs rappels peuvent être enregistrés sur le même élément (ex. : une carte .reveal qui
+     contient un graphique) : on les enchaîne au lieu de les écraser. */
   function onReveal(el, fn) {
-    el.__onReveal = fn;
-    if (observer) observer.observe(el); else { fn(); el.classList.add('in'); }
+    if (!observer) { fn(); el.classList.add('in'); return; }
+    var prev = el.__onReveal;
+    el.__onReveal = prev ? function () { prev(); fn(); } : fn;
+    if (el.__observed) return;
+    el.__observed = true;
+    observer.observe(el);
   }
 
   /* Graphique en barres horizontales.
