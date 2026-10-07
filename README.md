@@ -17,7 +17,13 @@ sont conservées et accessibles depuis `versions.html` :
 
 (`guide/index.html` redirige simplement vers la page d'accueil.)
 
-## Mettre en ligne (gratuit)
+## Site en ligne
+
+https://elicetian.github.io/ma-rue-mon-respect/ (GitHub Pages, dépôt
+https://github.com/Elicetian/ma-rue-mon-respect). Chaque `git push` sur `main` met le site à jour en
+une à deux minutes.
+
+## Autres façons de mettre en ligne (gratuit)
 
 **Netlify Drop** (le plus simple) : aller sur https://app.netlify.com/drop et glisser-déposer le
 dossier entier. Une adresse publique est créée immédiatement.
