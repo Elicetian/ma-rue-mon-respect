@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le guide du parfait relou — Ma rue, mon respect</title>
+  <meta name="description" content="Un faux mode d'emploi de la drague de rue, démonté leçon par leçon par les chiffres et le Code pénal. Campagne lycéenne « Ma rue, mon respect ».">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/base.css">
+  <style>
+    /* ---------- Palette « vieux manuel » : papier crème, orange brûlé, bleu nuit ---------- */
+    :root {
+      --bg: #f6eedb;
+      --bg-2: #ece1c6;
+      --ink: #1f2a44;
+      --ink-2: #44506b;
+      --muted: #7a7b86;
+      --accent: #c4511c;
+      --accent-ink: #fff6e8;
+      --accent-2: #1f2a44;
+      --warn: #e8b23a;
+      --card: #fffaf0;
+      --line: #d9ccaa;
+      --shadow: 0 10px 28px rgba(60, 40, 10, 0.12);
+      --radius: 14px;
+      --font-hand: "Caveat", "Comic Sans MS", cursive;
+      --stamp-no: #1f2a44;
+      --stamp-ill: #b3301a;
+      --paper-line: rgba(31, 42, 68, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #141a28; --bg-2: #1d2538; --ink: #f3ebd8; --ink-2: #cfc6b0; --muted: #9a9686;
+        --accent: #e8743a; --accent-ink: #1a120a; --accent-2: #e7c27a; --warn: #e8b23a;
+        --card: #1f2840; --line: #34405c; --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        --stamp-no: #e7c27a; --stamp-ill: #ff7a5c; --paper-line: rgba(243, 235, 216, 0.06);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #141a28; --bg-2: #1d2538; --ink: #f3ebd8; --ink-2: #cfc6b0; --muted: #9a9686;
+      --accent: #e8743a; --accent-ink: #1a120a; --accent-2: #e7c27a; --warn: #e8b23a;
+      --card: #1f2840; --line: #34405c; --shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      --stamp-no: #e7c27a; --stamp-ill: #ff7a5c; --paper-line: rgba(243, 235, 216, 0.06);
+    }
+
+    body {
+      background: var(--bg);
+      background-image: repeating-linear-gradient(0deg, transparent 0 31px, var(--paper-line) 31px 32px);
+    }
+    .hand { font-family: var(--font-hand); font-size: 1.5rem; line-height: 1.2; color: var(--accent); }
+    .kicker { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; color: var(--accent); }
+    .nav .brand .dot { background: var(--accent); }
+    .theme-btn { border: 2px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; width: 34px; height: 34px; cursor: pointer; font-size: 1rem; flex: 0 0 auto; }
+    .nav .wrap { flex-wrap: wrap; }
+    .nav .right { display: flex; align-items: center; gap: 8px; }
+
+    /* ---------- Bandeau ---------- */
+    .ribbon { background: var(--accent-2); color: #f6eedb; font-family: var(--font-display); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.8rem; text-align: center; padding: 8px 16px; }
+    :root[data-theme="dark"] .ribbon { background: var(--accent); color: var(--accent-ink); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ribbon { background: var(--accent); color: var(--accent-ink); } }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 56px 0 48px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+    .hero h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); margin-bottom: 12px; }
+    .hero h1 span { color: var(--accent); display: block; }
+    .hero .lead { font-size: 1.2rem; }
+    .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .spoiler { margin-top: 20px; }
+    @media (max-width: 760px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+    /* Fausse couverture de livre (CSS pur) */
+    .book { position: relative; margin: 0 auto; width: 100%; max-width: 320px; aspect-ratio: 3 / 4; background: var(--accent); color: var(--accent-ink); border-radius: 6px 16px 16px 6px; box-shadow: var(--shadow), inset 12px 0 0 rgba(0,0,0,0.18), inset 14px 0 0 rgba(255,255,255,0.12); padding: 28px 24px 24px 38px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-3deg); }
+    .book::after { content: ""; position: absolute; inset: 10px 10px 10px 24px; border: 2px solid rgba(255,255,255,0.35); border-radius: 4px 10px 10px 4px; pointer-events: none; }
+    .book .b-top { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.9; }
+    .book .b-title { font-family: var(--font-display); font-weight: 700; font-size: 2rem; line-height: 1.05; }
+    .book .b-title em { font-style: normal; font-size: 2.8rem; display: block; }
+    .book .b-sub { font-family: var(--font-hand); font-size: 1.4rem; line-height: 1.15; }
+    .book .b-badge { position: absolute; top: -14px; right: -14px; width: 86px; height: 86px; border-radius: 50%; background: var(--warn); color: #1f2a44; font-family: var(--font-display); font-weight: 700; font-size: 0.75rem; line-height: 1.1; display: grid; place-items: center; text-align: center; transform: rotate(10deg); box-shadow: var(--shadow); padding: 8px; }
+
+    /* ---------- Leçons ---------- */
+    .lessons-head { display: flex; justify-content: space-between; gap: 16px; align-items: end; flex-wrap: wrap; margin-bottom: 20px; }
+    .meter { position: sticky; top: 68px; z-index: 5; margin-bottom: 24px; padding: 16px 20px; display: grid; gap: 10px; }
+    @media (max-width: 640px) { .meter { position: static; } }
+    .meter-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+    .meter-head .level { font-family: var(--font-hand); font-size: 1.4rem; color: var(--accent); }
+    .meter-track { position: relative; height: 22px; border-radius: 999px; background: var(--bg-2); overflow: hidden; border: 1px solid var(--line); }
+    .meter-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--warn), var(--accent) 60%, var(--stamp-ill)); border-radius: 999px; transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .meter-ticks { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7, 1fr); pointer-events: none; }
+    .meter-ticks span { border-right: 2px solid var(--card); }
+    .meter-ticks span:last-child { border-right: 0; }
+    .meter-foot { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); }
+    .meter-total { margin: 4px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--bg-2); font-weight: 700; }
+    .meter-total .big { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); display: block; }
+    .meter-total[hidden] { display: none; }
+
+    .lessons { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .lesson { position: relative; overflow: hidden; padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 10px; }
+    .lesson .num { position: absolute; top: -18px; right: 8px; font-family: var(--font-display); font-weight: 700; font-size: 128px; line-height: 1; color: var(--accent); opacity: 0.12; pointer-events: none; user-select: none; }
+    .lesson h3 { font-size: 1.5rem; margin: 0; padding-right: 60px; }
+    .lesson .conseil { position: relative; margin: 0; padding: 12px 14px 12px 18px; border-left: 4px solid var(--warn); background: var(--bg-2); border-radius: 0 10px 10px 0; font-size: 1rem; }
+    .lesson .conseil::before { content: "Le conseil du guide"; display: block; font-family: var(--font-hand); font-size: 1.2rem; color: var(--accent); margin-bottom: 2px; }
+    .lesson .btn { align-self: flex-start; margin-top: 4px; }
+    .lesson .btn[aria-expanded="true"] { background: var(--accent-2); color: #f6eedb; border-color: var(--accent-2); }
+    :root[data-theme="dark"] .lesson .btn[aria-expanded="true"] { color: #141a28; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lesson .btn[aria-expanded="true"] { color: #141a28; } }
+    .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .panel > .inner { overflow: hidden; visibility: hidden; transition: visibility 0s linear 0.45s; }
+    .lesson.open .panel { grid-template-rows: 1fr; }
+    .lesson.open .panel > .inner { visibility: visible; transition-delay: 0s; }
+    .truth { display: grid; gap: 10px; padding-top: 12px; }
+    .truth .row { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: start; padding: 10px 0; border-top: 1px dashed var(--line); }
+    .truth .row .k { font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); padding-top: 3px; }
+    .truth .row .v { margin: 0; }
+    .truth .row .v .n { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--accent); line-height: 1; margin-right: 6px; font-variant-numeric: tabular-nums; }
+    .truth .row .v .source { display: block; margin-top: 4px; }
+    .truth .sec { font-weight: 800; font-size: 1.05rem; margin: 0; padding-top: 12px; }
+    .truth .law-link { font-weight: 800; }
+    .truth .peine { display: inline-block; margin-top: 4px; padding: 3px 8px; border-radius: 6px; background: var(--bg-2); font-size: 0.92rem; }
+    .stamp { position: absolute; top: 18px; right: 14px; z-index: 2; font-family: var(--font-display); font-weight: 700; font-size: 1rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 12px; border: 3px double currentColor; border-radius: 6px; color: var(--stamp-ill); opacity: 0; transform: rotate(-9deg) scale(1.8); transition: transform 0.4s cubic-bezier(0.2, 1.5, 0.4, 1), opacity 0.25s ease; pointer-events: none; mix-blend-mode: multiply; }
+    .stamp.no { color: var(--stamp-no); }
+    .lesson.open .stamp { opacity: 0.9; transform: rotate(-9deg) scale(1); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stamp { mix-blend-mode: normal; } }
+    :root[data-theme="dark"] .stamp { mix-blend-mode: normal; }
+    .lesson.last { border-color: var(--accent); }
+    @media (prefers-reduced-motion: reduce) { .panel, .stamp, .meter-fill { transition: none; } }
+    /* Capture / vérification : ?reveal=1 force l'affichage des éléments animés au défilement */
+    .force-reveal .reveal { opacity: 1; transform: none; transition: none; }
+
+    /* ---------- Chiffres ---------- */
+    .chiffres { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .contrast { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
+    .contrast .vs { font-family: var(--font-hand); font-size: 2rem; color: var(--accent); text-align: center; }
+    .contrast .side { display: flex; flex-direction: column; gap: 4px; }
+    .contrast .side .num { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+    .contrast .side.alt .num { color: var(--accent-2); }
+    @media (max-width: 560px) { .contrast { grid-template-columns: 1fr; } }
+    .geneve { border: 2px dashed var(--accent-2); }
+    .geneve .kicker { color: var(--accent-2); }
+
+    /* ---------- Agir ---------- */
+    .agir-block { display: grid; gap: 16px; }
+    .agir-block img { border-radius: var(--radius); }
+    .dispositifs { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .dispositifs .card { padding: 16px; }
+    .dispositifs h3 { font-size: 1.05rem; margin-bottom: 4px; }
+
+    /* ---------- Loi ---------- */
+    .tarif { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .tarif th, .tarif td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .tarif th { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .tarif td:first-child { font-weight: 800; }
+    .tarif .nat { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); display: block; font-weight: 400; }
+    .tarif-wrap { overflow-x: auto; }
+    .tarif-wrap .card { min-width: 0; }
+    .quiz { display: grid; gap: 12px; }
+    .quiz .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+    .quiz .verdict { font-weight: 800; min-height: 1.5em; }
+    .quiz .verdict.ok { color: var(--accent-2); }
+    .quiz .verdict.ko { color: var(--stamp-ill); }
+
+    /* ---------- Instagram ---------- */
+    .insta-wrap { display: grid; gap: 20px; grid-template-columns: 1fr 1.6fr; align-items: start; }
+    .insta-wrap > div { min-width: 0; }
+    @media (max-width: 760px) { .insta-wrap { grid-template-columns: 1fr; } }
+    .carousel { min-width: 0; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 12px; -webkit-overflow-scrolling: touch; }
+    .slide { flex: 0 0 240px; aspect-ratio: 4 / 5; scroll-snap-align: start; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
+    .slide.alt { background: var(--accent-2); color: #f6eedb; }
+    :root[data-theme="dark"] .slide.alt { color: #141a28; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slide.alt { color: #141a28; } }
+    .slide.paper { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+    .slide .s-kicker { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.85; }
+    .slide .s-title { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; line-height: 1.1; }
+    .slide .s-big { font-family: var(--font-display); font-weight: 700; font-size: 3rem; line-height: 1; }
+    .slide .s-foot { font-size: 0.8rem; opacity: 0.85; }
+    .insta-ideas { display: grid; gap: 12px; }
+    .insta-ideas .card { padding: 16px; }
+    .insta-ideas h3 { font-size: 1.05rem; margin-bottom: 4px; }
+
+    footer .foot-grid { display: grid; gap: 24px; grid-template-columns: 1fr 1.4fr; }
+    @media (max-width: 760px) { footer .foot-grid { grid-template-columns: 1fr; } }
+    footer ol { font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="ribbon">Ma rue, mon respect · Campagne lycéenne contre le harcèlement de rue</div>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span>Le guide du parfait relou</a>
+      <div class="right">
+        <ul>
+          <li><a href="#lecons">Leçons</a></li>
+          <li><a href="#chiffres">Chiffres</a></li>
+          <li><a href="#agir">Agir</a></li>
+          <li><a href="#loi">La loi</a></li>
+          <li><a href="#insta">Insta</a></li>
+        </ul>
+        <button class="theme-btn" id="theme" type="button" aria-label="Basculer le mode sombre" title="Mode sombre / clair">☾</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- ======== 1. Accueil ======== -->
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <div class="kicker">Manuel de développement personnel · Édition 2026</div>
+          <h1>Le guide du <span>parfait relou</span></h1>
+          <p class="lead">Devenez une légende… des commissariats. Sept leçons pour tout rater, expliquées par la science et le Code pénal.</p>
+          <p class="hand spoiler">Spoiler : la seule technique qui marche, c'est de laisser les gens tranquilles.</p>
+          <div class="cta">
+            <a class="btn" href="#lecons">Commencer la formation</a>
+            <a class="btn ghost" href="#chiffres">Voir les chiffres</a>
+          </div>
+        </div>
+        <div class="book" aria-hidden="true">
+          <div class="b-top">Collection « Et pourtant »</div>
+          <div class="b-title">Le guide du <em>parfait relou</em></div>
+          <div class="b-sub">7 leçons · 0 technique qui marche · préface du Code pénal</div>
+          <div class="b-badge">Garanti sans résultat</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ======== Les leçons ======== -->
+    <section id="lecons">
+      <div class="wrap">
+        <div class="lessons-head">
+          <div>
+            <div class="section-title"><span class="tag">Les leçons</span><h2>Sept techniques infaillibles pour finir au poste</h2></div>
+            <p class="lead">Chaque leçon commence par le conseil du guide. Puis on retourne la carte, et on regarde ce que ça fait, ce que disent les enquêtes, et ce que dit la loi.</p>
+          </div>
+          <button class="btn ghost" id="reveal-all" type="button">Tout révéler</button>
+        </div>
+
+        <div class="card meter" id="meter">
+          <div class="meter-head"><strong>Relou-mètre</strong><span class="level" id="meter-level">Encore fréquentable</span></div>
+          <div class="meter-track" role="progressbar" aria-label="Relou-mètre" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="meter-bar">
+            <div class="meter-fill" id="meter-fill"></div>
+            <div class="meter-ticks" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="meter-foot"><span>Fréquentable</span><span id="meter-count">0 leçon sur 7</span><span>Légende des commissariats</span></div>
+          <p class="meter-total" id="meter-total" hidden></p>
+        </div>
+
+        <div class="lessons" id="lessons"></div>
+      </div>
+    </section>
+
+    <!-- ======== 2. Les chiffres ======== -->
+    <section id="chiffres" class="chiffres">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Les chiffres</span><h2>La science, comme promis sur la couverture</h2></div>
+        <p class="lead">Le guide parle de « technique ». Les enquêtes parlent de millions de femmes qui changent de trottoir. Tout est sourcé, cliquez sur les sources.</p>
+        <div class="grid grid-3" id="big-stats"></div>
+
+        <div class="card reveal contrast" style="margin-top: 18px;">
+          <div class="side">
+            <div class="num" id="c-3900"></div>
+            <div class="label" id="c-3900-l"></div>
+            <div class="source" id="c-3900-s"></div>
+          </div>
+          <div class="vs">contre</div>
+          <div class="side alt">
+            <div class="num" id="c-3m"></div>
+            <div class="label" id="c-3m-l"></div>
+            <div class="source" id="c-3m-s"></div>
+          </div>
+        </div>
+        <p class="hand" style="margin-top: 12px;">Bonne nouvelle pour le relou : presque personne ne porte plainte. Mauvaise nouvelle : ça change.</p>
+
+        <div class="grid grid-2" id="charts" style="margin-top: 18px;"></div>
+
+        <div class="card reveal geneve" style="margin-top: 18px;">
+          <div class="kicker">À Genève aussi…</div>
+          <p>Le guide s'exporte mal : à Genève (Suisse), le canton a posé la même question dans son diagnostic de sécurité. Les proportions ressemblent beaucoup aux nôtres, surtout chez les plus jeunes.</p>
+          <div id="chart-geneve"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== 3. Agir ======== -->
+    <section id="agir">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Agir</span><h2>Le chapitre que le guide n'a pas écrit</h2></div>
+        <p class="lead">Pour celles et ceux qui subissent, pour celles et ceux qui voient, et pour tout le monde.</p>
+        <div class="grid grid-3" style="align-items: start;">
+          <div class="card agir-block">
+            <h3>Si ça t'arrive</h3>
+            <div id="act-victimes" class="grid"></div>
+          </div>
+          <div class="card agir-block">
+            <h3>Si tu es témoin : les 5D</h3>
+            <img src="shared/img/temoin.svg" alt="Un témoin s'interpose calmement entre une personne harcelée et un harceleur dans la rue." width="640" height="360">
+            <div id="act-temoins" class="grid"></div>
+          </div>
+          <div class="card agir-block">
+            <h3>Pour tout le monde</h3>
+            <div id="act-tous" class="grid"></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 32px;">Les numéros à connaître</h3>
+        <div class="contacts" id="contacts"></div>
+
+        <h3 style="margin-top: 32px;">Les dispositifs qui existent déjà</h3>
+        <div class="dispositifs" id="dispositifs"></div>
+      </div>
+    </section>
+
+    <!-- ======== 4. La loi ======== -->
+    <section id="loi" class="chiffres">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">La loi</span><h2>La partie que le guide préfère oublier</h2></div>
+        <p class="lead">Les éditeurs du guide ont relu le Code pénal et demandent à être retirés de la couverture. Voici ce qu'ils ont trouvé.</p>
+
+        <div class="grid grid-2" style="align-items: start;">
+          <div class="card reveal tarif-wrap">
+            <div class="kicker">Ça coûte combien ?</div>
+            <h3>Le tarif, en un coup d'œil</h3>
+            <table class="tarif" id="tarif">
+              <thead><tr><th scope="col">Infraction</th><th scope="col">Peine maximale</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="card reveal quiz" id="quiz">
+            <div class="kicker">Mini-quiz</div>
+            <h3 id="quiz-q"></h3>
+            <div class="choices" id="quiz-choices"></div>
+            <p class="verdict" id="quiz-verdict" aria-live="polite"></p>
+            <button class="btn ghost" id="quiz-next" type="button">Question suivante</button>
+          </div>
+        </div>
+
+        <div class="grid grid-2" id="lois" style="margin-top: 18px; align-items: start;"></div>
+        <p class="small muted" id="loi-note" style="margin-top: 16px;"></p>
+      </div>
+    </section>
+
+    <!-- ======== 5. Instagram ======== -->
+    <section id="insta">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Instagram</span><h2>La leçon du jour, en carrousel</h2></div>
+        <div class="insta-wrap">
+          <div>
+            <p class="lead">Le guide se lit aussi une leçon à la fois. Suivez <a id="insta-link" href="#" target="_blank" rel="noopener"></a> pour recevoir la leçon du jour, et surtout sa correction.</p>
+            <a class="btn" id="insta-btn" href="#" target="_blank" rel="noopener">Suivre @maruemonrespect</a>
+            <div class="insta-ideas" style="margin-top: 20px;" id="insta-ideas"></div>
+          </div>
+          <div>
+            <p class="kicker">Aperçu d'un carrousel « Leçon du jour »</p>
+            <div class="carousel" id="carousel" aria-label="Aperçu du carrousel Instagram"></div>
+            <p class="small muted">Faites défiler horizontalement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot-grid">
+      <div>
+        <p><strong>Ma rue, mon respect</strong><br>Campagne réalisée par des élèves de terminale, EMC, <span id="foot-year"></span>.</p>
+        <p><a class="insta" id="foot-insta" href="#" target="_blank" rel="noopener"></a></p>
+        <p><a href="versions.html">← Voir les autres versions du site</a></p>
+        <p class="small muted">Le « guide » est une parodie : on se moque des harceleurs et de leurs excuses, jamais des victimes. Les chiffres et les peines, eux, sont réels.</p>
+      </div>
+      <div>
+        <h3>Sources</h3>
+        <div id="sources"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared/charts.js"></script>
+  <script src="shared/data.js"></script>
+  <script src="shared/render.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var D = window.MRMR, esc = Charts.esc, el = Render.el, $ = function (id) { return document.getElementById(id); };
+
+    /* ---------- Thème ---------- */
+    (function () {
+      var root = document.documentElement, btn = $('theme');
+      try { var saved = localStorage.getItem('mrmr-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+      function isDark() {
+        var t = root.getAttribute('data-theme');
+        if (t) return t === 'dark';
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      function paint() { btn.textContent = isDark() ? '☀' : '☾'; }
+      btn.addEventListener('click', function () {
+        var next = isDark() ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('mrmr-theme', next); } catch (e) {}
+        paint();
+      });
+      paint();
+    })();
+
+    /* ---------- Lecture des peines depuis MRMR.lois (jamais de chiffre en dur) ---------- */
+    function parsePeine(str) {
+      var ans = str.match(/(\d+)\s*ans?\s+de\s+(?:prison|réclusion)/);
+      var mois = str.match(/(\d+)\s*mois\s+de\s+prison/);
+      var eur = str.match(/(\d[\d\s  ]*)\s*€/);
+      return {
+        ans: ans ? parseInt(ans[1], 10) : 0,
+        mois: mois ? parseInt(mois[1], 10) : 0,
+        euros: eur ? parseInt(eur[1].replace(/[\s  ]/g, ''), 10) : 0
+      };
+    }
+    function fmtEuros(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' €'; }
+    function fmtDuree(ans, mois) {
+      ans += Math.floor(mois / 12); mois = mois % 12;
+      var parts = [];
+      if (ans) parts.push(ans + ' an' + (ans > 1 ? 's' : ''));
+      if (mois) parts.push(mois + ' mois');
+      return parts.length ? parts.join(' et ') : '0 jour';
+    }
+    /* Peine courte (texte avant la première parenthèse) */
+    function peineCourte(str) { return str.replace(/\s*\(.*$/, '').replace(/,\s*stage.*$/, ''); }
+
+    /* ---------- Les 7 leçons ----------
+       stat : { id } → MRMR.stats ; { series, item, lbl } → un item de MRMR.series (valeur lue dans les données).
+       loi : id MRMR.lois ; aggravee : true → on affiche et on compte la peine aggravée.
+       seuil : true → le fait seul n'est pas une infraction, on ne le compte pas dans le total. */
+    var LESSONS = [
+      { titre: 'Le sifflement',
+        conseil: 'Deux doigts dans la bouche, un son strident, et toute la rue sait que vous existez. Pas besoin de bonjour : le sifflet, c\'est le bonjour des gens pressés. Astuce de pro : si elle ne se retourne pas, sifflez plus fort, elle n\'a sûrement pas entendu.',
+        ressenti: 'Être notée comme une voiture qui passe. Baisser la tête, accélérer, et se demander ce qu\'on a « fait » pour mériter ça.',
+        stat: { series: 'actes', item: 'Sifflée', lbl: 'des femmes ont déjà été sifflées dans la rue ou les transports.' },
+        loi: 'outrage', stamp: 'Illégal' },
+      { titre: 'Le regard insistant',
+        conseil: 'Fixez. Longtemps. De haut en bas, puis de bas en haut, comme un scanner d\'aéroport. Si elle détourne les yeux, c\'est qu\'elle est timide : continuez, elle finira par s\'habituer.',
+        ressenti: 'Vérifier sa tenue, changer de place dans le wagon, sortir son téléphone pour avoir l\'air occupée. Se sentir surveillée dans un lieu public.',
+        stat: { series: 'actes', item: 'Regardée avec insistance', lbl: 'des femmes ont déjà été regardées avec insistance dans la rue ou les transports.' },
+        loi: 'outrage', seuil: true, stamp: 'Déconseillé',
+        loiTexte: 'Un regard tout seul n\'a pas d\'article dans le Code pénal. Mais dès qu\'il s\'accompagne d\'un mot, d\'un bruit de baiser ou d\'un geste, ça devient un outrage sexiste et sexuel.' },
+      { titre: '« T\'es charmante, tu souris pas ? »',
+        conseil: 'Un compliment, puis un reproche : la formule magique. Elle n\'a pas souri ? C\'est forcément contre vous. Insistez : « Allez, un sourire, ça coûte rien. » Vous rendez service, en fait.',
+        ressenti: 'Devoir gérer l\'humeur d\'un inconnu. Sourire pour que ça s\'arrête, puis s\'en vouloir d\'avoir souri.',
+        stat: { id: 's3m' },
+        loi: 'outrage', stamp: 'Illégal' },
+      { titre: 'L\'insistance après un non',
+        conseil: '« Non » veut dire « pas tout de suite ». Redemandez le numéro, proposez un café, puis un verre, puis votre Snap. Au septième essai, c\'est mathématique, elle craque.',
+        ressenti: 'Chercher la formule qui fera partir sans vexer, parce qu\'un vexé peut devenir dangereux. Mentir : « j\'ai un copain ». Regretter d\'avoir répondu poliment.',
+        stat: { series: 'actes', item: 'Abordée avec insistance malgré un refus', lbl: 'des femmes ont déjà été abordées avec insistance malgré un refus.' },
+        loi: 'outrage', loi2: 'harcelement', loi2Texte: 'Et si c\'est la même personne qui recommence le lendemain au même arrêt :', stamp: 'Illégal' },
+      { titre: 'La filature',
+        conseil: 'Elle marche vite ? Marchez vite aussi. Elle tourne à gauche ? Quelle coïncidence, vous aussi. Elle entre dans un immeuble ? Attendez devant : elle finira bien par ressortir.',
+        ressenti: 'Le cœur qui s\'emballe, changer d\'itinéraire, entrer dans un commerce au hasard, appeler quelqu\'un pour ne pas être seule. Ne plus jamais prendre cette rue.',
+        stat: { series: 'actes', item: 'Suivie sur une partie du trajet', lbl: 'des femmes ont déjà été suivies sur une partie de leur trajet.' },
+        loi: 'outrage', stamp: 'Illégal' },
+      { titre: 'La remarque de groupe, « pour rigoler »',
+        conseil: 'Seul, vous êtes un relou. À cinq, vous êtes une ambiance. Lancez la vanne, laissez les potes relayer, et si elle réagit mal : « oh ça va, on rigole ». Le groupe a toujours raison.',
+        ressenti: 'Cinq regards, cinq rires, un seul trottoir. Ne pas répondre, parce qu\'on est seule contre cinq. Et s\'entendre dire que c\'est nous qui n\'avons pas d\'humour.',
+        stat: { id: 's86banal' },
+        loi: 'outrage', aggravee: true, aggravTexte: 'Aggravé parce que commis à plusieurs : ce n\'est plus une contravention, c\'est un délit.', stamp: 'Illégal' },
+      { titre: 'La main baladeuse dans le métro',
+        conseil: 'Heure de pointe, wagon bondé. Personne ne verra.',
+        sec: 'Fin du guide. Ce n\'est pas de la drague, ce n\'est pas du harcèlement : c\'est une agression sexuelle.',
+        ressenti: 'La sidération, le dégoût, et la peur de reprendre le métro le lendemain.',
+        stat: { id: 's38' },
+        loi: 'agression', stamp: 'Illégal', last: true }
+    ];
+
+    /* Résout un chiffre vers { value, unit, lbl, source } en échouant bruyamment si la donnée manque */
+    function resolveStat(st) {
+      if (st.id) {
+        var s = D.stats[st.id];
+        if (!s) throw new Error('Stat inconnue : ' + st.id);
+        return { value: s.value, unit: s.unit, lbl: s.label, source: s.source };
+      }
+      var ser = D.series[st.series];
+      if (!ser) throw new Error('Série inconnue : ' + st.series);
+      var it = null;
+      ser.items.forEach(function (i) { if (i.label === st.item) it = i; });
+      if (!it) throw new Error('Item inconnu dans ' + st.series + ' : ' + st.item);
+      return { value: it.value, unit: ser.unit, lbl: st.lbl, source: ser.source };
+    }
+
+    function lawHtml(id, aggravee) {
+      var l = D.lois[id];
+      if (!l) throw new Error('Loi inconnue : ' + id);
+      var peine = aggravee ? l.peineAggravee : l.peine;
+      return '<a class="law-link" href="#loi-' + esc(id) + '">' + esc(l.nom) + '</a> <span class="small muted">(' + esc(l.nature) + ')</span><br><span class="peine">' + esc(peineCourte(peine)) + '</span>';
+    }
+
+    /* ---------- Rendu des cartes ---------- */
+    var container = $('lessons'), opened = 0, openedSet = {};
+    LESSONS.forEach(function (L, i) {
+      var n = i + 1, st = resolveStat(L.stat);
+      var html = '<article class="card lesson reveal' + (L.last ? ' last' : '') + '" id="lecon-' + n + '">'
+        + '<div class="num" aria-hidden="true">' + (n < 10 ? '0' : '') + n + '</div>'
+        + '<div class="kicker">Leçon n° ' + n + '</div>'
+        + '<h3>' + esc(L.titre) + '</h3>'
+        + '<p class="conseil">' + esc(L.conseil) + '</p>'
+        + '<button class="btn ghost" type="button" aria-expanded="false" aria-controls="panel-' + n + '">Et en vrai ?</button>'
+        + '<div class="panel" id="panel-' + n + '"><div class="inner"><div class="truth">'
+        + (L.sec ? '<p class="sec">' + esc(L.sec) + '</p>' : '')
+        + '<div class="row"><div class="k">Ce que ça fait</div><p class="v">' + esc(L.ressenti) + '</p></div>'
+        + '<div class="row"><div class="k">Le chiffre</div><p class="v"><span class="n">' + esc(Charts.fmt(st.value, st.unit)) + '</span>' + esc(st.lbl) + '<span class="source">' + Charts.sourceHtml(st.source) + '</span></p></div>'
+        + '<div class="row"><div class="k">La loi</div><p class="v">'
+        + (L.loiTexte ? esc(L.loiTexte) + '<br>' : '')
+        + (L.aggravTexte ? esc(L.aggravTexte) + '<br>' : '')
+        + lawHtml(L.loi, !!L.aggravee)
+        + (L.loi2 ? '<br><span class="small">' + esc(L.loi2Texte) + '</span><br>' + lawHtml(L.loi2, false) : '')
+        + '</p></div>'
+        + '</div></div></div>'
+        + '<div class="stamp' + (L.seuil ? ' no' : '') + '" aria-hidden="true">' + esc(L.stamp) + '</div>'
+        + '</article>';
+      var card = el(html);
+      container.appendChild(card);
+      var btn = card.querySelector('button');
+      btn.addEventListener('click', function () {
+        var open = card.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.textContent = open ? 'Masquer la vérité' : 'Et en vrai ?';
+        if (open && !openedSet[n]) { openedSet[n] = true; opened++; updateMeter(); }
+      });
+    });
+
+    /* ---------- Relou-mètre ---------- */
+    var LEVELS = ['Encore fréquentable', 'Lourd', 'Relou débutant', 'Relou confirmé', 'Relou confirmé', 'Relou professionnel', 'Relou professionnel', 'Légende des commissariats'];
+    function totalPeines() {
+      var ans = 0, mois = 0, euros = 0;
+      LESSONS.forEach(function (L) {
+        if (L.seuil) return;
+        var l = D.lois[L.loi], p = parsePeine(L.aggravee ? l.peineAggravee : l.peine);
+        ans += p.ans; mois += p.mois; euros += p.euros;
+      });
+      return { ans: ans, mois: mois, euros: euros };
+    }
+    function updateMeter() {
+      var pct = Math.round(100 * opened / LESSONS.length);
+      $('meter-fill').style.width = pct + '%';
+      $('meter-bar').setAttribute('aria-valuenow', String(opened));
+      $('meter-level').textContent = LEVELS[opened];
+      $('meter-count').textContent = opened + ' leçon' + (opened > 1 ? 's' : '') + ' sur ' + LESSONS.length;
+      var tot = $('meter-total');
+      if (opened === LESSONS.length) {
+        var t = totalPeines();
+        tot.innerHTML = '<span class="big">Total de votre carrière : jusqu\'à ' + esc(fmtDuree(t.ans, t.mois)) + ' de prison et ' + esc(fmtEuros(t.euros)) + ' d\'amende.</span>'
+          + 'Ou alors : laisser les gens tranquilles, gratuit. <span class="small muted">(Maximums légaux additionnés, leçon par leçon, hors circonstances aggravantes non comptées. Les regards seuls ne sont pas facturés.)</span>';
+        tot.hidden = false;
+      } else {
+        tot.hidden = true;
+      }
+    }
+    $('reveal-all').addEventListener('click', function () {
+      container.querySelectorAll('.lesson').forEach(function (c) {
+        if (!c.classList.contains('open')) c.querySelector('button').click();
+      });
+      $('meter').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    /* ---------- Chiffres ---------- */
+    Render.bigStats($('big-stats'), ['s86', 's61', 's86banal']);
+    (function () {
+      var a = D.stats.s3900, b = D.stats.s3m;
+      Charts.counter($('c-3900'), a.value, a.unit); $('c-3900-l').textContent = a.label; $('c-3900-s').innerHTML = Charts.sourceHtml(a.source);
+      Charts.counter($('c-3m'), b.value, b.unit); $('c-3m-l').textContent = b.label; $('c-3m-s').innerHTML = Charts.sourceHtml(b.source);
+    })();
+    Render.charts($('charts'), ['age', 'actes', 'outrage', 'temoins']);
+    Charts.bars($('chart-geneve'), D.series.geneve);
+
+    /* ---------- Agir ---------- */
+    Render.actions($('act-victimes'), 'victimes');
+    Render.actions($('act-temoins'), 'temoins');
+    Render.actions($('act-tous'), 'tous');
+    Render.contacts($('contacts'));
+    D.dispositifs.forEach(function (d) {
+      $('dispositifs').appendChild(el('<div class="card reveal"><h3><a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.nom) + '</a></h3><p class="small" style="margin:0">' + esc(d.texte) + '</p></div>'));
+    });
+
+    /* ---------- Loi : tarif, quiz, fiches ---------- */
+    var tbody = $('tarif').querySelector('tbody');
+    Object.keys(D.lois).forEach(function (id) {
+      var l = D.lois[id];
+      tbody.appendChild(el('<tr><td><a href="#loi-' + esc(id) + '">' + esc(l.nom) + '</a><span class="nat">' + esc(l.nature) + '</span></td><td>' + esc(peineCourte(l.peine)) + '</td></tr>'));
+    });
+
+    (function quiz() {
+      var ids = Object.keys(D.lois).filter(function (id) { return D.lois[id].exemples && D.lois[id].exemples.length; });
+      var pool = [];
+      ids.forEach(function (id) { D.lois[id].exemples.forEach(function (ex) { pool.push({ id: id, ex: ex }); }); });
+      var qi = -1, order = pool.slice().sort(function () { return Math.random() - 0.5; });
+      function render() {
+        qi = (qi + 1) % order.length;
+        var q = order[qi], good = D.lois[q.id];
+        $('quiz-q').textContent = '« ' + q.ex + ' » : c\'est quoi, pour la loi ?';
+        var choices = $('quiz-choices'); choices.innerHTML = '';
+        $('quiz-verdict').textContent = ''; $('quiz-verdict').className = 'verdict';
+        var opts = [q.id];
+        var others = ids.filter(function (i) { return i !== q.id; }).sort(function () { return Math.random() - 0.5; });
+        opts.push(others[0], others[1]);
+        opts.sort(function () { return Math.random() - 0.5; });
+        opts.forEach(function (id) {
+          var b = el('<button class="btn ghost" type="button">' + esc(D.lois[id].nom) + '</button>');
+          b.addEventListener('click', function () {
+            var v = $('quiz-verdict');
+            if (id === q.id) { v.className = 'verdict ok'; v.textContent = 'Exact : ' + peineCourte(good.peine) + '.'; }
+            else { v.className = 'verdict ko'; v.textContent = 'Raté. C\'est « ' + good.nom + ' » : ' + peineCourte(good.peine) + '.'; }
+          });
+          choices.appendChild(b);
+        });
+      }
+      $('quiz-next').addEventListener('click', render);
+      render();
+    })();
+
+    Render.lois($('lois'));
+    $('loi-note').textContent = D.loiNote;
+
+    /* ---------- Instagram ---------- */
+    $('insta-link').textContent = '@' + D.campagne.instagram; $('insta-link').href = D.campagne.instagramUrl;
+    $('insta-btn').href = D.campagne.instagramUrl; $('insta-btn').textContent = 'Suivre @' + D.campagne.instagram;
+    $('foot-insta').textContent = '@' + D.campagne.instagram; $('foot-insta').href = D.campagne.instagramUrl;
+    $('foot-year').textContent = D.campagne.annee;
+
+    var IDEAS = [
+      { t: 'Série « Leçon du jour »', x: 'Un carrousel par leçon : slide 1 le conseil du guide, slide 2 « Et en vrai ? », slide 3 le chiffre et sa source, slide 4 l\'article de loi et la peine. Sept posts, un par jour.' },
+      { t: 'Le relou-mètre en story', x: 'Un sondage par technique : « Déjà vu ? » / « Déjà subi ? ». Le lendemain, les résultats de la classe face aux chiffres nationaux.' },
+      { t: 'La facture', x: 'Un post « addition » façon ticket de caisse : chaque technique avec son tarif pénal, et la ligne finale « Laisser les gens tranquilles : 0 € ».' }
+    ];
+    IDEAS.forEach(function (i) { $('insta-ideas').appendChild(el('<div class="card"><h3>' + esc(i.t) + '</h3><p class="small" style="margin:0">' + esc(i.x) + '</p></div>')); });
+
+    (function carousel() {
+      var L = LESSONS[0], st = resolveStat(L.stat), law = D.lois[L.loi];
+      var slides = [
+        '<div class="slide"><div class="s-kicker">Leçon du jour · n° 1</div><div class="s-title">' + esc(L.titre) + '</div><div class="s-foot">Le conseil du guide : « ' + esc(L.conseil.split('.')[0]) + '. »</div></div>',
+        '<div class="slide paper"><div class="s-kicker">2 / 4</div><div class="s-title">Et en vrai ?</div><div class="s-foot">' + esc(L.ressenti) + '</div></div>',
+        '<div class="slide alt"><div class="s-kicker">3 / 4 · Le chiffre</div><div class="s-big">' + esc(Charts.fmt(st.value, st.unit)) + '</div><div class="s-foot">' + esc(st.lbl) + ' ' + esc([st.source.org, st.source.year].join(', ')) + '</div></div>',
+        '<div class="slide"><div class="s-kicker">4 / 4 · La loi</div><div class="s-title">' + esc(law.nom) + '</div><div class="s-foot">' + esc(peineCourte(law.peine)) + '. @' + esc(D.campagne.instagram) + '</div></div>'
+      ];
+      slides.forEach(function (s) { $('carousel').appendChild(el(s)); });
+    })();
+
+    /* ---------- Pied de page ---------- */
+    Render.sources($('sources'));
+    Charts.revealAll();
+
+    /* Paramètres de vérification (captures) : ?reveal=1 et ?open=1 */
+    if (/[?&]reveal=1/.test(location.search)) {
+      document.documentElement.classList.add('force-reveal');
+      document.querySelectorAll('.bar').forEach(function (b) { b.style.width = b.getAttribute('data-w') + '%'; });
+    }
+    if (/[?&]open=1/.test(location.search)) $('reveal-all').click();
+  })();
+  </script>
+</body>
+</html>

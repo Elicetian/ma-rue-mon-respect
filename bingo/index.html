@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bingo du harcèlement de rue — Ma rue, mon respect</title>
+  <meta name="description" content="Coche ce que tu as déjà entendu dans la rue. Spoiler : tout le monde fait bingo. Et ce n'est pas un jeu. Campagne lycéenne contre le harcèlement de rue.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css">
+  <style>
+    /* ---------- Palette « jeu de société » : violet profond, jaune, rose corail, blanc ---------- */
+    :root {
+      --bg: #fdf9ff;
+      --bg-2: #f1e9fb;
+      --ink: #221240;
+      --ink-2: #4b3a6e;
+      --muted: #7d6f99;
+      --accent: #ff4f7a;
+      --accent-ink: #ffffff;
+      --accent-2: #6b3fd6;
+      --warn: #ffd43b;
+      --card: #ffffff;
+      --line: #dfd2f5;
+      --shadow: 0 8px 24px rgba(59, 31, 110, 0.12);
+      --radius: 18px;
+      --violet: #2d1457;
+      --violet-2: #3f1f7a;
+      --jaune: #ffd43b;
+      --corail: #ff4f7a;
+      --rouge: #e5203b;
+      --cell: #ffffff;
+      --cell-ink: #221240;
+      --cell-line: #6b3fd6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #160b2b; --bg-2: #22133f; --ink: #f3edff; --ink-2: #cfc3ea; --muted: #9b8fbd;
+        --card: #261646; --line: #3f2a6b; --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        --cell: #2d1a52; --cell-ink: #f3edff; --cell-line: #a98cf5;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #160b2b; --bg-2: #22133f; --ink: #f3edff; --ink-2: #cfc3ea; --muted: #9b8fbd;
+      --card: #261646; --line: #3f2a6b; --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --cell: #2d1a52; --cell-ink: #f3edff; --cell-line: #a98cf5;
+    }
+    body { background: var(--bg); }
+    .force-reveal .reveal { opacity: 1; transform: none; transition: none; }
+    .nav .brand .dot { background: var(--jaune); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: var(--violet);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 2px, transparent 2px);
+      background-size: 22px 22px;
+      color: #fff; padding: 56px 0 48px;
+    }
+    .hero .wrap { display: grid; gap: 28px; align-items: center; grid-template-columns: 1fr; }
+    @media (min-width: 820px) { .hero .wrap { grid-template-columns: 1.4fr 1fr; } }
+    .hero .bandeau {
+      display: inline-block; background: var(--jaune); color: var(--violet); font-family: var(--font-display);
+      font-weight: 700; padding: 6px 14px; border-radius: 8px; transform: rotate(-2deg); margin-bottom: 18px;
+      font-size: 1rem; letter-spacing: 0.02em;
+    }
+    .hero h1 { color: var(--jaune); margin-bottom: 12px; }
+    .hero h1 .petit { display: block; font-size: 0.45em; color: #fff; font-weight: 500; letter-spacing: 0; }
+    .hero .lead { color: #efe8ff; font-size: 1.25rem; max-width: 36ch; }
+    .hero .second { color: #cdbdf3; font-size: 1rem; max-width: 48ch; margin-bottom: 24px; }
+    .hero .second strong { color: var(--jaune); font-weight: 800; }
+    .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero .btn.jaune { background: var(--jaune); color: var(--violet); }
+    .hero .btn.ghost { color: #fff; border-color: rgba(255, 255, 255, 0.45); }
+    .hero img { width: min(300px, 70%); margin: 0 auto; filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.35)); transform: rotate(4deg); }
+
+    /* ---------- Grille ---------- */
+    #grille { padding-top: 48px; }
+    .board { display: grid; gap: 24px; grid-template-columns: 1fr; }
+    @media (min-width: 920px) { .board { grid-template-columns: 1.15fr 1fr; align-items: start; } }
+    .plateau {
+      background: var(--violet-2); border-radius: 22px; padding: 12px; box-shadow: var(--shadow);
+      position: sticky; top: 72px;
+    }
+    @media (max-width: 919px) { .plateau { position: static; } }
+    .plateau .titre {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: 4px 6px 10px; color: #fff; font-family: var(--font-display); font-weight: 700;
+    }
+    .plateau .titre .b { font-size: 1.5rem; color: var(--jaune); letter-spacing: 0.1em; }
+    .plateau .titre .c { font-size: 0.95rem; background: rgba(255, 255, 255, 0.12); padding: 4px 10px; border-radius: 999px; font-family: var(--font); font-weight: 800; }
+    .cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .cell {
+      position: relative; aspect-ratio: 1 / 1; border-radius: 12px; border: 3px solid var(--cell-line);
+      background: var(--cell); color: var(--cell-ink); font-family: var(--font); font-weight: 800;
+      font-size: 15px; line-height: 1.2; padding: 8px; cursor: pointer; text-align: center;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      transition: transform 0.12s ease, background 0.2s ease, box-shadow 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cell:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); }
+    .cell:focus-visible { outline: 3px solid var(--jaune); outline-offset: 2px; }
+    .cell.libre { background: var(--jaune); color: var(--violet); border-color: var(--jaune); font-family: var(--font-display); font-weight: 700; }
+    .cell .num { position: absolute; top: 4px; left: 7px; font-size: 10px; color: var(--muted); font-weight: 700; }
+    .cell .txt { position: relative; z-index: 1; overflow-wrap: break-word; }
+    .cell[aria-pressed="true"] { background: #fff2b8; color: #5a4a80; border-color: var(--corail); transform: rotate(-2deg); }
+    .cell[aria-pressed="true"] .txt { opacity: 0.55; }
+    .cell[aria-pressed="true"]::before, .cell[aria-pressed="true"]::after {
+      content: ""; position: absolute; left: 8%; right: 8%; top: 50%; height: 11%; margin-top: -5.5%;
+      background: var(--rouge); border-radius: 999px; z-index: 2; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      animation: croix 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+    }
+    .cell[aria-pressed="true"]::before { transform: rotate(45deg); }
+    .cell[aria-pressed="true"]::after { transform: rotate(-45deg); animation-delay: 0.08s; }
+    @keyframes croix { from { transform: scaleX(0) rotate(45deg); } }
+    .cell[aria-pressed="true"]::after { animation-name: croix2; }
+    @keyframes croix2 { from { transform: scaleX(0) rotate(-45deg); } }
+    .cell.bingo-line { box-shadow: 0 0 0 3px var(--jaune), 0 0 18px var(--jaune); }
+    @media (max-width: 480px) {
+      .plateau { padding: 6px; border-radius: 16px; }
+      .cells { gap: 6px; }
+      .cell { font-size: 13px; padding: 3px; border-width: 2px; border-radius: 9px; line-height: 1.15; letter-spacing: -0.01em; }
+      .cell .num { display: none; }
+      .plateau .titre .b { font-size: 1.25rem; }
+    }
+    .shake { animation: shake 0.6s ease both; }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-0.5deg); }
+      20%, 80% { transform: translate3d(4px, 0, 0) rotate(0.5deg); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0) rotate(-1deg); }
+      40%, 60% { transform: translate3d(6px, 0, 0) rotate(1deg); }
+    }
+    .plateau .outils { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 4px 2px; color: #fff; }
+    .plateau .outils .msg { font-weight: 700; font-size: 0.95rem; flex: 1 1 200px; }
+    .plateau .outils .btn { padding: 8px 14px; font-size: 0.9rem; box-shadow: none; }
+    .plateau .outils .btn.ghost { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+
+    /* Révélation */
+    .panneau { display: grid; gap: 16px; }
+    .revelation { min-height: 180px; border: 3px dashed var(--line); background: var(--bg-2); box-shadow: none; }
+    .revelation.vide { display: grid; place-items: center; text-align: center; color: var(--muted); }
+    .revelation .rv-case { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--accent-2); margin-bottom: 8px; }
+    .revelation .rv-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1; color: var(--accent); margin-bottom: 6px; }
+    .revelation .rv-ctx { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+    .revelation .rv-law { margin-top: 14px; padding: 12px 14px; background: var(--card); border-radius: 12px; border-left: 5px solid var(--jaune); }
+    .revelation .rv-law .tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; background: var(--accent-2); color: #fff; padding: 2px 8px; border-radius: 999px; margin-right: 6px; }
+    .revelation .rv-law .art { color: var(--muted); font-size: 0.8rem; }
+    .revelation .rv-law .peine { margin-top: 6px; font-weight: 800; color: var(--accent); }
+    .revelation .rv-law .nature { font-weight: 800; }
+    .revelation .source { margin-top: 8px; }
+    .pop { animation: pop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; }
+    @keyframes pop { from { transform: scale(0.96); opacity: 0.4; } }
+    .legende { font-size: 0.9rem; color: var(--ink-2); }
+
+    /* ---------- Bandeau BINGO ---------- */
+    .voile { position: fixed; inset: 0; z-index: 100; background: rgba(45, 20, 87, 0.92); display: none; align-items: center; justify-content: center; padding: 16px; }
+    .voile.on { display: flex; }
+    .voile .carte-bingo {
+      background: var(--jaune); color: var(--violet); border-radius: 24px; padding: 32px 24px; max-width: 520px; width: 100%;
+      text-align: center; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); transform: rotate(-1.5deg);
+      animation: pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+    }
+    .voile h2 { font-size: clamp(2.6rem, 10vw, 4.5rem); margin: 0 0 4px; letter-spacing: 0.08em; }
+    .voile .sous { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; margin-bottom: 18px; }
+    .voile .gros { font-family: var(--font-display); font-weight: 700; font-size: clamp(3rem, 12vw, 5rem); line-height: 1; color: var(--rouge); }
+    .voile .phrase { font-weight: 800; font-size: 1.1rem; margin: 6px auto 18px; max-width: 30ch; }
+    .voile .source { color: #5a4a80; }
+    .voile .btn { background: var(--violet); color: #fff; margin-top: 14px; }
+
+    /* ---------- Carte Instagram ---------- */
+    .carte-wrap { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: center; }
+    @media (min-width: 820px) { .carte-wrap { grid-template-columns: 1fr 1fr; } }
+    .carte {
+      aspect-ratio: 1 / 1; max-width: 540px; width: 100%; margin: 0 auto;
+      background: var(--violet); background-image: radial-gradient(rgba(255, 255, 255, 0.08) 2px, transparent 2px); background-size: 20px 20px;
+      border-radius: 16px; padding: 20px; display: grid; grid-template-rows: auto 1fr auto; gap: 12px; color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .carte .c-titre { font-family: var(--font-display); font-weight: 700; color: var(--jaune); font-size: 22px; line-height: 1.1; text-align: center; }
+    .carte .c-titre span { display: block; color: #fff; font-size: 13px; font-weight: 500; margin-top: 2px; }
+    .carte .c-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 6px; }
+    .carte .c-cell { background: #fff; color: var(--violet); border-radius: 8px; font-size: 14px; font-weight: 800; line-height: 1.15; padding: 4px; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .carte .c-cell.libre { background: var(--jaune); font-family: var(--font-display); font-weight: 700; }
+    .carte .c-pied { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 14px; color: var(--jaune); }
+    .carte .c-pied .corail { color: var(--corail); }
+    @media (max-width: 480px) {
+      .carte { padding: 12px; gap: 8px; }
+      .carte .c-titre { font-size: 18px; }
+      .carte .c-titre span { font-size: 12px; }
+      .carte .c-cell { font-size: 11px; padding: 3px; border-radius: 6px; }
+      .carte .c-grid { gap: 4px; }
+      .carte .c-pied { font-size: 12px; }
+    }
+
+    /* ---------- Sections communes ---------- */
+    .section-title .tag { background: var(--accent-2); }
+    .contraste { display: grid; grid-template-columns: 1fr; gap: 18px; align-items: stretch; }
+    @media (min-width: 640px) { .contraste { grid-template-columns: 1fr auto 1fr; } }
+    .contraste .vs { display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--accent-2); }
+    .encart-geneve { background: var(--bg-2); border: 0; }
+    .agir-bloc h3.bloc-titre { font-size: 1.6rem; display: flex; align-items: center; gap: 10px; }
+    .agir-bloc h3.bloc-titre .pastille { width: 36px; height: 36px; border-radius: 10px; background: var(--jaune); color: var(--violet); display: grid; place-items: center; font-size: 1rem; }
+    .agir-bloc img { border-radius: var(--radius); margin-bottom: 16px; }
+    .dispositifs { margin-top: 18px; }
+    .dispositifs .card { padding: 16px 18px; }
+    .dispositifs .card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .dispositifs .card p { margin: 0 0 6px; font-size: 0.95rem; }
+    .dispositifs .card a { font-weight: 800; font-size: 0.9rem; }
+
+    /* Tableau « combien coûte chaque case » */
+    .prix { width: 100%; border-collapse: separate; border-spacing: 0; margin: 18px 0 24px; font-size: 0.95rem; }
+    .prix th, .prix td { text-align: left; padding: 12px 14px; vertical-align: top; }
+    .prix thead th { background: var(--violet); color: var(--jaune); font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+    .prix thead th:first-child { border-radius: 12px 0 0 0; }
+    .prix thead th:last-child { border-radius: 0 12px 0 0; }
+    .prix tbody tr:nth-child(odd) td { background: var(--card); }
+    .prix tbody tr:nth-child(even) td { background: var(--bg-2); }
+    .prix tbody tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+    .prix tbody tr:last-child td:last-child { border-radius: 0 0 12px 0; }
+    .prix td.case { font-family: var(--font-display); font-weight: 700; color: var(--accent-2); }
+    .prix td.peine { font-weight: 800; color: var(--accent); }
+    .prix .nat { display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 6px; background: var(--jaune); color: var(--violet); margin-left: 6px; vertical-align: middle; }
+    @media (max-width: 640px) {
+      .prix thead { display: none; }
+      .prix, .prix tbody, .prix tr, .prix td { display: block; }
+      .prix tr { margin-bottom: 10px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+      .prix td { padding: 8px 12px; }
+      .prix td::before { content: attr(data-l); display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 800; }
+      .prix tbody tr:last-child td:first-child, .prix tbody tr:last-child td:last-child { border-radius: 0; }
+    }
+    .lois-grid { display: grid; gap: 18px; }
+    .loi-note { margin-top: 18px; }
+
+    /* Instagram */
+    #insta { background: var(--violet); color: #fff; }
+    #insta .section-title .tag { background: var(--jaune); color: var(--violet); }
+    #insta .lead { color: #e8dfff; }
+    #insta .card { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.18); color: #fff; box-shadow: none; }
+    #insta .card h3 { color: var(--jaune); }
+    #insta .card p { color: #e8dfff; }
+    #insta .btn.jaune { background: var(--jaune); color: var(--violet); }
+    footer .insta { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span> Ma rue, mon respect</a>
+      <ul>
+        <li><a href="#grille">Le bingo</a></li>
+        <li><a href="#chiffres">Les chiffres</a></li>
+        <li><a href="#agir">Agir</a></li>
+        <li><a href="#loi">La loi</a></li>
+        <li><a href="#insta">Instagram</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- ======================= 1. ACCUEIL ======================= -->
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <span class="bandeau">Ma rue, mon respect</span>
+          <h1>Bingo du harcèlement de rue <span class="petit">Édition « tous les jours, en bas de chez toi »</span></h1>
+          <p class="lead">Coche ce que tu as déjà entendu. Spoiler : tout le monde fait bingo. Et ce n'est pas un jeu.</p>
+          <p class="second">On a mis ça sous forme de jeu parce que c'est exactement comme ça que les harceleurs le vivent. <strong>Pas nous.</strong></p>
+          <div class="cta">
+            <a class="btn jaune" href="#grille">Jouer (malheureusement)</a>
+            <a class="btn ghost" href="#chiffres">Voir les chiffres</a>
+          </div>
+        </div>
+        <img src="../shared/img/bingo.svg" alt="">
+      </div>
+    </header>
+
+    <!-- ======================= LA GRILLE ======================= -->
+    <section id="grille">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">La grille</span><h2>À toi de cocher</h2></div>
+        <p class="lead">Seize phrases ou situations entendues ou vécues dans la rue, les transports, à la sortie du lycée. Clique sur une case si c'est déjà arrivé à toi, ou devant toi. Chaque case cochée révèle un chiffre ou un article de loi.</p>
+        <div class="board">
+          <div class="plateau" id="plateau">
+            <div class="titre"><span class="b">B·I·N·G·O</span><span class="c" id="compteur">0 / 16</span></div>
+            <div class="cells" id="cells" role="group" aria-label="Grille de bingo, 16 cases"></div>
+            <div class="outils">
+              <div class="msg" id="message" aria-live="polite"></div>
+              <button class="btn ghost" type="button" id="reset">Réinitialiser</button>
+            </div>
+          </div>
+          <div class="panneau">
+            <div class="card revelation vide" id="revelation" aria-live="polite">
+              <p>Coche une case pour voir ce qu'elle cache.<br><span class="small">Un chiffre vérifié ou un article du Code pénal.</span></p>
+            </div>
+            <p class="legende">La case jaune est la case « libre » : elle est déjà cochée pour toi, parce qu'il n'y a personne à qui ce n'est jamais arrivé, ni de près ni de loin. Une ligne, une colonne ou une diagonale complète, et c'est gagné. Enfin, « gagné ».</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CARTE INSTAGRAM ======================= -->
+    <section id="carte-section" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="carte-wrap">
+          <div>
+            <div class="section-title"><span class="tag">À partager</span><h2>Ta grille, format carré</h2></div>
+            <p class="lead">Fais une capture d'écran de cette carte et poste-la en story ou en post, en taguant <strong>@maruemonrespect</strong>. Entoure les cases que tu as déjà entendues. Compare avec tes potes. Comptez les bingos.</p>
+            <p class="small muted">Pas d'appli, pas de téléchargement : capture d'écran, et c'est tout.</p>
+          </div>
+          <div class="carte reveal" id="carte" aria-label="Carte à capturer : bingo du harcèlement de rue">
+            <div class="c-titre">Bingo du harcèlement de rue <span>Coche ce que tu as déjà entendu. Et ce n'est pas un jeu.</span></div>
+            <div class="c-grid" id="carte-grid"></div>
+            <div class="c-pied"><span>@maruemonrespect</span><span class="corail">Ma rue, mon respect</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 2. LES CHIFFRES ======================= -->
+    <section id="chiffres" style="background: var(--bg-2);">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Les chiffres</span><h2>Tout le monde fait bingo</h2></div>
+        <p class="lead">Si tu as coché plus de cases que tu ne pensais, tu es dans la norme. Et c'est bien ça, le problème. Chiffres sourcés, enquêtes représentatives, sauf mention contraire.</p>
+        <div class="grid grid-3" id="gros-chiffres"></div>
+
+        <h3 style="margin-top: 40px;">3 900 contre 3 millions : la case « personne ne porte plainte »</h3>
+        <div class="contraste">
+          <div class="grid" id="contraste-a"></div>
+          <div class="vs" aria-hidden="true">VS</div>
+          <div class="grid" id="contraste-b"></div>
+        </div>
+
+        <h3 style="margin-top: 40px;">Qui, quoi, où</h3>
+        <div class="grid grid-2" id="graphiques"></div>
+
+        <div class="card encart-geneve reveal" style="margin-top: 24px;">
+          <div class="section-title"><span class="tag" style="background: var(--accent);">Et ailleurs</span><h3 style="margin: 0;">À Genève aussi, on fait bingo</h3></div>
+          <p>Pour vérifier que ce n'est pas « un truc français » : le canton de Genève, en Suisse, mesure la même chose dans son diagnostic local de sécurité. Comparaison imparfaite (période de 5 ans, pas 12 mois), mais le motif est le même : plus on est jeune, plus on coche.</p>
+          <div class="grid" id="geneve"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 3. AGIR ======================= -->
+    <section id="agir">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Agir</span><h2>Changer les règles du jeu</h2></div>
+        <p class="lead">Le bingo, on ne peut pas refuser d'y jouer. Mais on peut refuser que ça continue, que ce soit à toi que ça arrive, ou devant toi.</p>
+        <div class="grid grid-3" style="margin-top: 24px;">
+          <div class="card agir-bloc">
+            <h3 class="bloc-titre"><span class="pastille" aria-hidden="true">1</span>Si ça t'arrive</h3>
+            <div class="grid" id="actions-victimes"></div>
+          </div>
+          <div class="card agir-bloc">
+            <h3 class="bloc-titre"><span class="pastille" aria-hidden="true">2</span>Si tu es témoin</h3>
+            <img src="../shared/img/temoin.svg" alt="Un témoin s'interpose entre la victime et le harceleur">
+            <p class="small muted">La méthode des 5D, enseignée par la formation Stand Up.</p>
+            <div class="grid" id="actions-temoins"></div>
+          </div>
+          <div class="card agir-bloc">
+            <h3 class="bloc-titre"><span class="pastille" aria-hidden="true">3</span>Pour tout le monde</h3>
+            <div class="grid" id="actions-tous"></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 40px;">Les numéros</h3>
+        <div class="contacts" id="contacts"></div>
+
+        <h3 style="margin-top: 32px;">Les dispositifs qui existent déjà</h3>
+        <div class="grid grid-2 dispositifs" id="dispositifs"></div>
+      </div>
+    </section>
+
+    <!-- ======================= 4. LA LOI ======================= -->
+    <section id="loi" style="background: var(--bg-2);">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">La loi</span><h2>Chaque case a un prix</h2></div>
+        <p class="lead">Au loto, on gagne de l'argent. Au bingo du harcèlement, c'est l'inverse : presque chaque case de la grille correspond à une infraction, avec une amende, et parfois de la prison. Voilà le tarif, extrait du Code pénal.</p>
+
+        <h3>Combien coûte chaque case ?</h3>
+        <table class="prix">
+          <thead><tr><th scope="col">La case</th><th scope="col">L'infraction</th><th scope="col">La peine maximale</th></tr></thead>
+          <tbody id="prix-body"></tbody>
+        </table>
+
+        <h3>Les fiches complètes</h3>
+        <div class="lois-grid" id="lois"></div>
+        <p class="small muted loi-note" id="loi-note"></p>
+      </div>
+    </section>
+
+    <!-- ======================= 5. INSTAGRAM ======================= -->
+    <section id="insta">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Instagram</span><h2>Le bingo continue sur @maruemonrespect</h2></div>
+        <p class="lead">La campagne vit sur Instagram. Suis le compte, partage ta grille, et fais tourner : plus on coche à voix haute, moins ça passe en silence.</p>
+        <div class="grid grid-3" style="margin: 24px 0;">
+          <div class="card">
+            <h3>Une case par jour</h3>
+            <p>Chaque jour, une case de la grille en post : la phrase, le chiffre qui va avec, l'article de loi. Seize jours, seize raisons d'arrêter de dire « c'est rien ».</p>
+          </div>
+          <div class="card">
+            <h3>Le bingo de la classe</h3>
+            <p>Une story avec la grille vierge, chacun entoure ses cases et renvoie. On publie le compte final : combien de bingos pour une seule classe de terminale ?</p>
+          </div>
+          <div class="card">
+            <h3>« Et toi, tu as coché quoi ? »</h3>
+            <p>Un sondage story par case : « déjà entendu ? oui / non ». Les résultats en chiffres, comparés à ceux des enquêtes nationales.</p>
+          </div>
+        </div>
+        <a class="btn jaune" href="https://www.instagram.com/maruemonrespect/" target="_blank" rel="noopener">Suivre @maruemonrespect</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= 6. PIED DE PAGE ======================= -->
+  <footer>
+    <div class="wrap">
+      <p><strong>Campagne réalisée par des élèves de terminale, EMC, 2026.</strong><br>
+        <a class="insta" href="https://www.instagram.com/maruemonrespect/" target="_blank" rel="noopener">@maruemonrespect</a> ·
+        <a href="../index.html">Voir les autres versions</a></p>
+      <h3 style="font-size: 1rem; margin-top: 24px;">Sources</h3>
+      <div id="sources"></div>
+    </div>
+  </footer>
+
+  <!-- Bandeau BINGO -->
+  <div class="voile" id="voile" role="dialog" aria-modal="true" aria-labelledby="voile-titre" hidden>
+    <div class="carte-bingo">
+      <h2 id="voile-titre">BINGO.</h2>
+      <div class="sous">Et ce n'est pas un jeu.</div>
+      <div class="gros" id="voile-num"></div>
+      <div class="phrase" id="voile-phrase"></div>
+      <div class="source" id="voile-source"></div>
+      <button class="btn" type="button" id="voile-ok">Continuer</button>
+    </div>
+  </div>
+
+  <script src="../shared/charts.js"></script>
+  <script src="../shared/data.js"></script>
+  <script src="../shared/render.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var D = window.MRMR, esc = Charts.esc, $ = function (id) { return document.getElementById(id); };
+    if (/reveal/.test(location.search)) document.documentElement.classList.add('force-reveal');
+
+    /* ---------- Les 16 cases et ce qu'elles révèlent (tout vient de MRMR) ----------
+       stat : id de MRMR.stats ; serie : [id de MRMR.series, index de l'item] ; loi : id de MRMR.lois ;
+       aggrave : afficher la peine aggravée (ici : « à plusieurs »). */
+    var CASES = [
+      { t: 'Souris\u00a0!', loi: 'outrage' },
+      { t: 'T\'es char\u00admante', stat: 's88inconnu' },
+      { t: 'Tu vas où comme ça\u00a0?', stat: 's61' },
+      { t: 'Tu me donnes ton numéro\u00a0? (×\u00a03)', serie: ['actes', 2], loi: 'outrage' },
+      { t: 'Un sifflement', serie: ['actes', 1], loi: 'outrage' },
+      { t: 'Tu l\'as déjà vécu ou vu', libre: true, stat: 's86temoins' },
+      { t: 'Un klaxon', stat: 's81' },
+      { t: '«\u00a0Pétasse\u00a0» après un refus', loi: 'injure' },
+      { t: 'Made\u00admoiselle, made\u00admoiselle\u00a0!', stat: 's3m' },
+      { t: 'Un regard de haut en bas', serie: ['actes', 0] },
+      { t: 'Suivie sur 200 mètres', serie: ['actes', 3], loi: 'outrage' },
+      { t: 'Un «\u00a0compli\u00adment\u00a0» en groupe', loi: 'outrage', aggrave: true },
+      { t: 'C\'est juste un compli\u00adment', stat: 's86banal' },
+      { t: 'Faut pas s\'habiller comme ça', serie: ['evitement', 1] },
+      { t: 'Je rigole, t\'es coincée ou quoi\u00a0?', stat: 's63' },
+      { t: 'Un frotte\u00adment dans le métro', stat: 's38', loi: 'agression' }
+    ];
+    var LIGNES = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15],[0,4,8,12],[1,5,9,13],[2,6,10,14],[3,7,11,15],[0,5,10,15],[3,6,9,12]];
+    var KEY = 'mrmr-bingo-v1';
+    var state = { c: [], a: [] };
+    CASES.forEach(function (c, i) { state.c[i] = !!c.libre; });
+
+    function charger() {
+      try {
+        var s = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if (s && s.c && s.c.length === 16) { state.c = s.c.map(Boolean); state.a = (s.a || []).map(Number); }
+      } catch (e) { /* stockage indisponible : on joue sans mémoire */ }
+    }
+    function sauver() {
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* idem */ }
+    }
+
+    /* ---------- Grille ---------- */
+    var cells = $('cells'), boutons = [];
+    CASES.forEach(function (c, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'cell' + (c.libre ? ' libre' : '');
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('data-i', i);
+      b.innerHTML = '<span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="txt">' + esc(c.t) + '</span>';
+      b.addEventListener('click', function () { basculer(i); });
+      cells.appendChild(b); boutons.push(b);
+    });
+
+    function nbCoches() { return state.c.filter(Boolean).length; }
+    function messagePour(n) {
+      if (n === 0) return 'Vraiment ? Demande à une fille de ta classe.';
+      if (n <= 5) return 'Ça commence. Chaque case est déjà une de trop.';
+      if (n <= 10) return 'Plus de la moitié. Tu vois le motif, là ?';
+      return 'Bienvenue dans la vie de ' + esc(Charts.fmt(D.stats.s3m.value, D.stats.s3m.unit)) + ' de femmes par an.';
+    }
+    function lignesCompletes() {
+      return LIGNES.map(function (l, k) { return l.every(function (i) { return state.c[i]; }) ? k : -1; }).filter(function (k) { return k >= 0; });
+    }
+    function peindre() {
+      var gagnantes = {};
+      lignesCompletes().forEach(function (k) { LIGNES[k].forEach(function (i) { gagnantes[i] = true; }); });
+      boutons.forEach(function (b, i) {
+        b.setAttribute('aria-pressed', state.c[i] ? 'true' : 'false');
+        b.classList.toggle('bingo-line', !!gagnantes[i]);
+      });
+      var n = nbCoches();
+      $('compteur').textContent = n + ' / 16';
+      $('message').innerHTML = messagePour(n);
+    }
+
+    function basculer(i) {
+      state.c[i] = !state.c[i];
+      peindre(); sauver();
+      if (state.c[i]) reveler(i); else videRevelation();
+      var nouvelles = lignesCompletes().filter(function (k) { return state.a.indexOf(k) < 0; });
+      if (state.c[i] && nouvelles.length) {
+        nouvelles.forEach(function (k) { state.a.push(k); });
+        sauver();
+        bingo();
+      }
+    }
+
+    /* ---------- Révélation sous la grille ---------- */
+    function videRevelation() {
+      var r = $('revelation');
+      r.className = 'card revelation vide';
+      r.innerHTML = '<p>Coche une case pour voir ce qu\'elle cache.<br><span class="small">Un chiffre vérifié ou un article du Code pénal.</span></p>';
+    }
+    function reveler(i) {
+      var c = CASES[i], html = '<div class="rv-case">' + esc(c.t) + '</div>';
+      if (c.stat) {
+        var s = D.stats[c.stat];
+        html += '<div class="rv-num">' + esc(Charts.fmt(s.value, s.unit)) + '</div><div>' + esc(s.label) + '</div>'
+          + '<div class="source">' + Charts.sourceHtml(s.source) + '</div>';
+      }
+      if (c.serie) {
+        var se = D.series[c.serie[0]], it = se.items[c.serie[1]];
+        html += '<div class="rv-num">' + esc(Charts.fmt(it.value, se.unit)) + '</div><div><strong>' + esc(it.label) + '</strong></div>'
+          + '<div class="rv-ctx">' + esc(se.title) + '</div>'
+          + '<div class="source">' + Charts.sourceHtml(se.source) + '</div>';
+      }
+      if (c.loi) {
+        var l = D.lois[c.loi];
+        var peine = c.aggrave && l.peineAggravee ? l.peineAggravee : l.peine;
+        html += '<div class="rv-law"><span class="tag">La loi</span><span class="nature">' + esc(l.nom) + '</span>'
+          + (c.aggrave ? ' <span class="small">(à plusieurs : circonstance aggravante)</span>' : '')
+          + '<div class="art">' + esc(l.article) + '</div>'
+          + '<div class="peine">' + esc(peine) + '</div>'
+          + '<div class="source">' + Charts.sourceHtml(l.source) + '</div></div>';
+      }
+      var r = $('revelation');
+      r.className = 'card revelation';
+      r.innerHTML = html;
+      r.classList.remove('pop'); void r.offsetWidth; r.classList.add('pop');
+    }
+
+    /* ---------- BINGO ---------- */
+    var voile = $('voile'), dernierFocus = null;
+    function bingo() {
+      var p = $('plateau');
+      p.classList.remove('shake'); void p.offsetWidth; p.classList.add('shake');
+      var s = D.stats.s86;
+      $('voile-num').textContent = Charts.fmt(s.value, s.unit);
+      $('voile-phrase').textContent = Charts.fmt(s.value, s.unit) + ' des femmes ont déjà gagné. Aucune n\'a demandé à jouer.';
+      $('voile-source').innerHTML = esc(s.label) + '<br>' + Charts.sourceHtml(s.source);
+      dernierFocus = document.activeElement;
+      voile.hidden = false; voile.classList.add('on');
+      document.body.style.overflow = 'hidden';
+      $('voile-ok').focus();
+    }
+    function fermer() {
+      voile.classList.remove('on'); voile.hidden = true;
+      document.body.style.overflow = '';
+      if (dernierFocus && dernierFocus.focus) dernierFocus.focus();
+    }
+    $('voile-ok').addEventListener('click', fermer);
+    voile.addEventListener('click', function (e) { if (e.target === voile) fermer(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && voile.classList.contains('on')) fermer(); });
+
+    $('reset').addEventListener('click', function () {
+      CASES.forEach(function (c, i) { state.c[i] = !!c.libre; });
+      state.a = [];
+      try { localStorage.removeItem(KEY); } catch (e) { /* rien */ }
+      peindre(); videRevelation();
+    });
+
+    charger(); peindre();
+
+    /* ---------- Carte Instagram (texte seulement, à capturer) ---------- */
+    var cg = $('carte-grid');
+    CASES.forEach(function (c) {
+      var d = document.createElement('div');
+      d.className = 'c-cell' + (c.libre ? ' libre' : '');
+      d.textContent = c.t;
+      cg.appendChild(d);
+    });
+
+    /* ---------- Chiffres ---------- */
+    Render.bigStats($('gros-chiffres'), ['s86', 's61', 's86banal']);
+    Render.bigStats($('contraste-a'), ['s3900']);
+    Render.bigStats($('contraste-b'), ['s3m']);
+    Render.charts($('graphiques'), ['age', 'actes', 'virage', 'outrage', 'temoins', 'evitement']);
+    Render.charts($('geneve'), ['geneve']);
+
+    /* ---------- Agir ---------- */
+    Render.actions($('actions-victimes'), 'victimes');
+    Render.actions($('actions-temoins'), 'temoins');
+    Render.actions($('actions-tous'), 'tous');
+    Render.contacts($('contacts'));
+    D.dispositifs.forEach(function (d) {
+      $('dispositifs').appendChild(Render.el('<div class="card reveal"><h3>' + esc(d.nom) + '</h3><p>' + esc(d.texte) + '</p><a href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.url.replace(/^https?:\/\//, '').replace(/\/$/, '')) + ' →</a></div>'));
+    });
+
+    /* ---------- La loi : tableau « combien coûte chaque case » ---------- */
+    var TARIF = [
+      { c: 'Un sifflement', loi: 'outrage' },
+      { c: 'Tu me donnes ton numéro ? (× 3)', loi: 'outrage' },
+      { c: 'Suivie sur 200 mètres', loi: 'outrage' },
+      { c: 'Un « compliment » en groupe', loi: 'outrage', aggrave: true },
+      { c: '« Pétasse » après un refus', loi: 'injure' },
+      { c: 'Un frottement dans le métro', loi: 'agression' }
+    ];
+    TARIF.forEach(function (t) {
+      var l = D.lois[t.loi];
+      var nature = t.aggrave ? 'délit' : l.nature.split(',')[0];
+      var peine = t.aggrave && l.peineAggravee ? l.peineAggravee : l.peine;
+      $('prix-body').appendChild(Render.el('<tr>'
+        + '<td class="case" data-l="La case">' + esc(t.c) + '</td>'
+        + '<td data-l="L\'infraction">' + esc(l.nom) + (t.aggrave ? ' (à plusieurs)' : '') + '<span class="nat">' + esc(nature) + '</span><br><span class="small muted">' + esc(l.article) + '</span></td>'
+        + '<td class="peine" data-l="La peine maximale">' + esc(peine) + '</td>'
+        + '</tr>'));
+    });
+    Render.lois($('lois'));
+    $('loi-note').textContent = D.loiNote;
+
+    /* ---------- Pied de page ---------- */
+    Render.sources($('sources'));
+    Charts.revealAll();
+  })();
+  </script>
+</body>
+</html>

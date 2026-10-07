@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Une balance de la justice">
+  <circle cx="120" cy="120" r="110" fill="#17a398" opacity="0.12"/>
+  <rect x="114" y="50" width="12" height="130" rx="4" fill="#1b1a17"/>
+  <rect x="80" y="178" width="80" height="14" rx="6" fill="#1b1a17"/>
+  <rect x="40" y="66" width="160" height="10" rx="5" fill="#1b1a17"/>
+  <g stroke="#1b1a17" stroke-width="4"><line x1="60" y1="72" x2="40" y2="120"/><line x1="60" y1="72" x2="80" y2="120"/><line x1="180" y1="72" x2="160" y2="110"/><line x1="180" y1="72" x2="200" y2="110"/></g>
+  <path d="M30 120 h60 a30 30 0 0 1 -60 0z" fill="#e4572e"/>
+  <path d="M150 110 h60 a30 30 0 0 1 -60 0z" fill="#17a398"/>
+  <circle cx="120" cy="46" r="10" fill="#f4b942"/>
+</svg>

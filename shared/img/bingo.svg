@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Une grille de bingo">
+  <rect x="30" y="30" width="180" height="180" rx="20" fill="#ffffff" stroke="#1b1a17" stroke-width="6"/>
+  <g stroke="#1b1a17" stroke-width="4"><line x1="90" y1="30" x2="90" y2="210"/><line x1="150" y1="30" x2="150" y2="210"/><line x1="30" y1="90" x2="210" y2="90"/><line x1="30" y1="150" x2="210" y2="150"/></g>
+  <g fill="#e4572e"><circle cx="60" cy="60" r="16"/><circle cx="120" cy="120" r="16"/><circle cx="180" cy="180" r="16"/></g>
+  <g fill="#17a398"><circle cx="180" cy="60" r="16"/><circle cx="60" cy="180" r="16"/></g>
+</svg>

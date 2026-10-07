@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Météo de la rue — Ma rue, mon respect</title>
+  <meta name="description" content="Le bulletin météo que personne ne devrait avoir à consulter avant de sortir : chiffres, loi et conseils contre le harcèlement de rue. Campagne lycéenne « Ma rue, mon respect ».">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css">
+  <style>
+    /* ---------- Palette « bulletin météo » ---------- */
+    :root {
+      --bg: #e4f1fc;
+      --bg-2: #cfe3f7;
+      --ink: #0f2340;
+      --ink-2: #2f4a73;
+      --muted: #5b7191;
+      --accent: #e35d00;
+      --accent-ink: #ffffff;
+      --accent-2: #1f7fd6;
+      --warn: #ffcc33;
+      --card: rgba(255, 255, 255, 0.86);
+      --line: rgba(15, 35, 64, 0.14);
+      --shadow: 0 10px 30px rgba(15, 35, 64, 0.12);
+      --radius: 20px;
+      --sky-top: #091a36;
+      --sky-mid: #163d75;
+      --sky-low: #3f8fd1;
+      --page-top: #dcedfb;
+      --page-low: #f2f8fe;
+      --sun: #ffcc33;
+      --vert: #2e9e5b; --jaune: #f2c530; --orange: #f2831b; --rouge: #d7263d;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0a1628; --bg-2: #1b2f4e; --ink: #eaf2ff; --ink-2: #c3d3ea; --muted: #8aa0c0;
+        --accent: #ffa047; --accent-ink: #1b1a17; --accent-2: #5ab0ff;
+        --card: rgba(22, 42, 71, 0.85); --line: rgba(255, 255, 255, 0.14);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        --sky-top: #03091a; --sky-mid: #0b2246; --sky-low: #16437a;
+        --page-top: #071326; --page-low: #0d2040;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0a1628; --bg-2: #1b2f4e; --ink: #eaf2ff; --ink-2: #c3d3ea; --muted: #8aa0c0;
+      --accent: #ffa047; --accent-ink: #1b1a17; --accent-2: #5ab0ff;
+      --card: rgba(22, 42, 71, 0.85); --line: rgba(255, 255, 255, 0.14);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --sky-top: #03091a; --sky-mid: #0b2246; --sky-low: #16437a;
+      --page-top: #071326; --page-low: #0d2040;
+    }
+
+    body { background: linear-gradient(180deg, var(--page-top) 0%, var(--page-low) 100%) fixed; }
+    .card { backdrop-filter: blur(6px); }
+    .nav .brand .dot { background: var(--sun); box-shadow: 0 0 0 3px rgba(255, 204, 51, 0.3); }
+    .nav .brand { white-space: nowrap; }
+    @media (max-width: 640px) { .nav .wrap { flex-wrap: wrap; justify-content: center; padding-top: 8px; padding-bottom: 8px; } .nav ul { justify-content: center; } }
+
+    /* ---------- Hero : le plateau du bulletin ---------- */
+    .hero {
+      position: relative; overflow: hidden; color: #fff;
+      background: linear-gradient(170deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-low) 100%);
+      padding: 56px 0 0;
+    }
+    .hero::before { /* le soleil */
+      content: ""; position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, #ffe08a 0%, var(--sun) 38%, rgba(255, 204, 51, 0.25) 60%, rgba(255, 204, 51, 0) 72%);
+      pointer-events: none;
+    }
+    .hero::after { /* quelques étoiles */
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
+      background-image: radial-gradient(#fff 1px, transparent 1.5px), radial-gradient(#fff 1px, transparent 1.5px);
+      background-size: 180px 140px, 260px 220px; background-position: 20px 30px, 120px 90px;
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .live {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; background: var(--rouge); color: #fff; padding: 4px 10px; border-radius: 6px;
+    }
+    .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: blink 1.4s infinite; }
+    @keyframes blink { 50% { opacity: 0.2; } }
+    .bandeau {
+      font-family: var(--font-display); font-weight: 700; font-size: 1rem; background: var(--sun); color: #0f2340;
+      padding: 4px 12px; border-radius: 6px; transform: rotate(-1.5deg); display: inline-block;
+    }
+    .hero h1 { font-size: 48px; margin-bottom: 6px; text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35); }
+    @media (min-width: 720px) { .hero h1 { font-size: 72px; } }
+    .hero .lead { color: rgba(255, 255, 255, 0.88); font-size: 1.25rem; }
+    .hero .punch { font-family: var(--font-display); font-size: 1.25rem; color: var(--sun); margin: 0 0 20px; }
+    .hero .cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+    .hero .btn.ghost { color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+    .hero .btn.ghost:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Bulletin du jour */
+    .bulletin { padding: 0 0 48px; }
+    .bulletin-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .bulletin-head h2 { font-size: 1.5rem; margin: 0; }
+    .bulletin-head .date { font-weight: 800; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.8); }
+    .indices { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .indice { color: var(--ink); padding: 18px; display: grid; gap: 4px; align-content: start; }
+    .indice .ico { width: 64px; height: 64px; color: var(--accent-2); margin-bottom: 6px; }
+    .indice .ico svg { width: 64px; height: 64px; }
+    .indice .ind-label { font-weight: 800; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); }
+    .indice .ind-num { font-family: var(--font-display); font-weight: 700; font-size: 48px; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .indice .ind-num .unit { font-size: 20px; font-weight: 700; }
+    @media (min-width: 1000px) { .indice .ind-num { font-size: 56px; } }
+    .indice .ind-sub { color: var(--ink-2); font-size: 0.875rem; }
+    .expl { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; font-size: 0.875rem; }
+    .expl summary { cursor: pointer; font-weight: 800; color: var(--accent-2); list-style: none; display: flex; gap: 6px; align-items: center; }
+    .expl summary::-webkit-details-marker { display: none; }
+    .expl summary::before { content: "▸"; transition: transform 0.2s; }
+    .expl[open] summary::before { transform: rotate(90deg); }
+    .expl p { margin: 8px 0 6px; color: var(--ink-2); }
+
+    /* Bandeau défilant façon chaîne info */
+    .ticker { position: relative; z-index: 1; background: var(--sun); color: #0f2340; overflow: hidden; white-space: nowrap; font-weight: 800; font-size: 0.875rem; padding: 8px 0; border-top: 3px solid #0f2340; }
+    .ticker-track { display: inline-flex; gap: 0; animation: ticker 60s linear infinite; will-change: transform; }
+    .ticker-track span { padding: 0 28px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; display: block; white-space: normal; }
+      .ticker-track .dup { display: none; }
+      .live::before { animation: none; }
+    }
+
+    /* ---------- Titres de section ---------- */
+    .section-title .tag { background: var(--ink); color: var(--bg); }
+    .lead { max-width: 64ch; }
+
+    /* ---------- Zones ---------- */
+    .zone { display: grid; gap: 6px; align-content: start; }
+    .zone .zone-head { display: flex; align-items: center; gap: 12px; }
+    .zone .ico { width: 56px; height: 56px; color: var(--accent-2); flex: none; }
+    .zone .ico svg { width: 56px; height: 56px; }
+    .zone h3 { margin: 0; }
+    .zone .zone-num { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 1; color: var(--accent); margin-top: 6px; }
+    .zone .zone-sub { color: var(--ink-2); font-size: 0.875rem; }
+    .zone .zone-bulletin { margin: 8px 0 6px; font-weight: 700; }
+    .zone .note { font-size: 0.75rem; color: var(--muted); margin: 0; }
+
+    /* ---------- Vigilance ---------- */
+    .profils { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .profils .btn { background: var(--card); color: var(--ink); border: 2px solid var(--line); box-shadow: none; }
+    .profils .btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .vigi { border-radius: var(--radius); padding: 24px; display: grid; gap: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); transition: background 0.4s ease, color 0.4s ease; }
+    .vigi .vigi-niveau { font-family: var(--font-display); font-weight: 700; font-size: 32px; display: flex; align-items: center; gap: 12px; }
+    .vigi .vigi-niveau .pastille { width: 22px; height: 22px; border-radius: 50%; background: var(--bg-2); border: 3px solid rgba(255, 255, 255, 0.7); flex: none; }
+    .vigi .vigi-num { font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 1; }
+    .vigi .vigi-phrase { font-size: 1.125rem; margin: 0; }
+    .vigi .vigi-note { font-size: 0.875rem; margin: 0; opacity: 0.85; }
+    .vigi .source { color: inherit; opacity: 0.75; }
+    .vigi.vert { background: var(--vert); color: #fff; border-color: transparent; }
+    .vigi.jaune { background: var(--jaune); color: #0f2340; border-color: transparent; }
+    .vigi.orange { background: var(--orange); color: #0f2340; border-color: transparent; }
+    .vigi.rouge { background: var(--rouge); color: #fff; border-color: transparent; }
+    .echelle { display: flex; gap: 6px; flex-wrap: wrap; font-size: 0.75rem; font-weight: 800; margin-top: 14px; }
+    .echelle span { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); }
+    .echelle i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+    /* ---------- Tendance ---------- */
+    .tendance-grid { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
+    @media (min-width: 860px) { .tendance-grid { grid-template-columns: 1fr 1.4fr; } }
+    .thermo { display: grid; gap: 10px; }
+    .thermo .big { font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 1; color: var(--accent); }
+
+    /* ---------- Chiffres ---------- */
+    .contraste { display: grid; grid-template-columns: 1fr; gap: 0; overflow: hidden; padding: 0; }
+    @media (min-width: 720px) { .contraste { grid-template-columns: 1fr auto 1fr; align-items: stretch; } }
+    .contraste > div { padding: 22px; }
+    .contraste .vs { display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; background: var(--bg-2); color: var(--ink-2); padding: 10px 22px; }
+    .contraste .num { font-family: var(--font-display); font-weight: 700; font-size: 48px; line-height: 1; color: var(--accent); }
+    .contraste .num.bleu { color: var(--accent-2); }
+    .geneve { border-left: 6px solid var(--accent-2); }
+
+    /* ---------- Agir ---------- */
+    .agir-bloc { display: grid; gap: 16px; align-content: start; }
+    .agir-bloc h3.bloc-title { font-size: 1.5rem; margin: 0; display: flex; align-items: center; gap: 10px; }
+    .agir-bloc img { border-radius: 14px; }
+    .dispositifs { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .dispositif { padding: 14px 16px; }
+    .dispositif h3 { font-size: 1rem; margin-bottom: 4px; }
+    .dispositif p { margin: 0; font-size: 0.875rem; color: var(--ink-2); }
+
+    /* ---------- Loi : échelle de Beaufort ---------- */
+    .beaufort { display: grid; gap: 0; padding: 0; overflow: hidden; }
+    .beaufort .bf-head { padding: 18px 22px 10px; }
+    .beaufort .bf-head h3 { margin: 0 0 4px; }
+    .beaufort .bf-head p { margin: 0; font-size: 0.875rem; color: var(--ink-2); }
+    .bf-row { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: center; padding: 12px 22px; border-top: 1px solid var(--line); text-decoration: none; color: inherit; }
+    .bf-row:hover { background: var(--bg-2); }
+    .bf-row .force { font-family: var(--font-display); font-weight: 700; font-size: 24px; color: var(--accent-2); text-align: center; }
+    .bf-row .vent { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    .bf-row .nom { font-weight: 800; }
+    .bf-row .peine { font-size: 0.875rem; color: var(--ink-2); }
+    .bf-row .peine, .bf-row .souffle { grid-column: 2 / -1; }
+    .bf-row .souffle { height: 8px; border-radius: 999px; background: var(--bg-2); overflow: hidden; margin-top: 6px; }
+    .bf-row .souffle i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent-2), var(--accent)); border-radius: 999px; }
+    @media (min-width: 720px) { .bf-row { grid-template-columns: 44px 1fr 1fr; } .bf-row .peine { grid-column: 3; } }
+
+    /* ---------- Instagram ---------- */
+    .posts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .post { display: grid; gap: 6px; align-content: start; }
+    .post .ico { width: 48px; height: 48px; color: var(--accent-2); }
+    .post .ico svg { width: 48px; height: 48px; }
+    .post h3 { margin: 0; font-size: 1.125rem; }
+    .post p { margin: 0; font-size: 0.875rem; color: var(--ink-2); }
+
+    footer .btn { margin-right: 8px; }
+    .static .reveal { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span>Météo de la rue</a>
+      <ul>
+        <li><a href="#bulletin">Bulletin</a></li>
+        <li><a href="#zones">Zones</a></li>
+        <li><a href="#vigilance">Vigilance</a></li>
+        <li><a href="#tendance">Tendance</a></li>
+        <li><a href="#chiffres">Chiffres</a></li>
+        <li><a href="#agir">Agir</a></li>
+        <li><a href="#loi">Loi</a></li>
+        <li><a href="#insta">Insta</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ======================= HERO ======================= -->
+    <header class="hero" id="top">
+      <div class="wrap">
+        <div class="hero-top">
+          <span class="live">En direct</span>
+          <span class="bandeau">Ma rue, mon respect</span>
+        </div>
+        <h1>Météo de la rue</h1>
+        <p class="lead">Le bulletin que personne ne devrait avoir à consulter avant de sortir.</p>
+        <p class="punch">Ce n'est pas la météo qu'il faut changer, c'est le climat.</p>
+        <div class="cta">
+          <a class="btn" href="#chiffres">Voir les chiffres</a>
+          <a class="btn ghost" href="#agir">Changer le climat</a>
+        </div>
+
+        <section class="bulletin" id="bulletin" aria-labelledby="bulletin-title">
+          <div class="bulletin-head">
+            <h2 id="bulletin-title">Bulletin du jour</h2>
+            <div class="date" id="date"></div>
+          </div>
+          <div class="indices" id="indices"></div>
+        </section>
+      </div>
+      <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+    </header>
+
+    <!-- ======================= ZONES ======================= -->
+    <section id="zones">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Prévisions</span><h2>Prévisions par zone</h2></div>
+        <p class="lead">Le temps qu'il fait selon l'endroit où l'on marche. Spoiler : il ne fait beau nulle part, mais certains couloirs sont plus exposés que d'autres.</p>
+        <div class="grid grid-3" id="zones-grid"></div>
+      </div>
+    </section>
+
+    <!-- ======================= VIGILANCE ======================= -->
+    <section id="vigilance">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Vigilance</span><h2>Votre niveau de vigilance</h2></div>
+        <p class="lead">Choisissez un profil : le bandeau se règle sur la tranche d'âge la plus proche dans les enquêtes. Quand la combinaison exacte n'existe pas, on le dit, on n'invente pas.</p>
+        <div class="profils" id="profils" role="group" aria-label="Choisir un profil"></div>
+        <div class="vigi reveal" id="vigi" aria-live="polite">
+          <div class="vigi-niveau"><span class="pastille" aria-hidden="true"></span><span class="txt">Choisissez un profil</span></div>
+          <p class="vigi-phrase">Le bandeau s'allume dès que vous avez choisi.</p>
+        </div>
+        <div class="echelle" id="echelle" aria-label="Échelle des niveaux"></div>
+      </div>
+    </section>
+
+    <!-- ======================= TENDANCE ======================= -->
+    <section id="tendance">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Tendance</span><h2>La courbe des températures</h2></div>
+        <div class="tendance-grid">
+          <div class="card thermo reveal">
+            <div class="big" id="tendance-num"></div>
+            <p id="tendance-label" class="lead" style="font-size: 1rem;"></p>
+            <p><strong>Les plaintes montent. Pas parce qu'il fait plus chaud : parce qu'on commence à les déposer.</strong> L'infraction d'outrage sexiste n'existe que depuis 2018 ; chaque année, un peu plus de victimes vont au commissariat et un peu plus de policiers la relèvent.</p>
+            <p class="small muted" style="margin: 0;">Les années marquées « ≈ » sont reconstituées à partir des taux d'évolution publiés, pas des chiffres bruts.</p>
+          </div>
+          <div id="tendance-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CHIFFRES ======================= -->
+    <section id="chiffres">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Relevés</span><h2>Les chiffres</h2></div>
+        <p class="lead">Les relevés de nos stations : enquêtes nationales, statistiques de police, Code pénal. Rien d'inventé, tout est sourcé sous chaque carte.</p>
+        <div class="grid grid-3" id="stats-grid"></div>
+
+        <h3 style="margin-top: 32px;">Le front de la banalisation</h3>
+        <div class="grid grid-2" id="banal-grid"></div>
+
+        <h3 style="margin-top: 32px;">Visibilité judiciaire</h3>
+        <div class="card contraste reveal" id="contraste"></div>
+
+        <h3 style="margin-top: 32px;">Les cartes de nos stations</h3>
+        <div class="grid grid-2" id="charts-grid"></div>
+
+        <h3 style="margin-top: 32px;">À Genève aussi…</h3>
+        <div class="grid grid-2">
+          <div class="card geneve reveal">
+            <h3>Même ciel de l'autre côté de la frontière</h3>
+            <p>Les chiffres suisses ne sont pas des chiffres français : ils mesurent le harcèlement de rue subi <strong>au cours des 5 dernières années</strong> dans le canton de Genève, pas sur 12 mois en France. On les montre pour une seule raison : le phénomène ne s'arrête pas à la douane.</p>
+            <p class="small muted" style="margin: 0;">Comparaison à lire avec prudence : périodes et questions différentes de l'enquête Ifop.</p>
+          </div>
+          <div id="geneve-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= AGIR ======================= -->
+    <section id="agir">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Prévisions pour demain</span><h2>Prévisions pour demain : comment changer le climat</h2></div>
+        <p class="lead">La météo, on la subit. Le climat de la rue, on le fabrique ensemble. Trois bulletins selon la place où l'on se trouve.</p>
+        <div class="grid grid-3">
+          <div class="card agir-bloc reveal">
+            <h3 class="bloc-title"><span class="ico" aria-hidden="true" data-icon="umbrella" style="width:32px;height:32px;color:var(--accent-2)"></span>Si ça t'arrive</h3>
+            <div id="actions-victimes" class="grid" style="gap: 14px;"></div>
+          </div>
+          <div class="card agir-bloc reveal">
+            <h3 class="bloc-title"><span class="ico" aria-hidden="true" data-icon="suncloud" style="width:32px;height:32px;color:var(--accent-2)"></span>Si tu es témoin</h3>
+            <img src="../shared/img/temoin.svg" alt="Un témoin s'interpose entre la victime et le harceleur" width="640" height="360">
+            <p class="small muted" style="margin: 0;">La méthode des 5D : cinq façons d'aider sans se mettre en danger.</p>
+            <div id="actions-temoins" class="grid" style="gap: 14px;"></div>
+          </div>
+          <div class="card agir-bloc reveal">
+            <h3 class="bloc-title"><span class="ico" aria-hidden="true" data-icon="sun" style="width:32px;height:32px;color:var(--accent-2)"></span>Pour tout le monde</h3>
+            <div id="actions-tous" class="grid" style="gap: 14px;"></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 32px;">Numéros à garder sous la main</h3>
+        <div class="contacts" id="contacts"></div>
+
+        <h3 style="margin-top: 32px;">Les abris</h3>
+        <div class="dispositifs" id="dispositifs"></div>
+      </div>
+    </section>
+
+    <!-- ======================= LOI ======================= -->
+    <section id="loi">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Avis de tempête</span><h2>Avis de tempête judiciaire</h2></div>
+        <p class="lead">Dépression profonde sur les excuses habituelles : « c'était pour rire », « c'est un compliment », « elle n'a rien dit ». Depuis 2018, siffler dans la rue est une infraction. Voici ce que le Code pénal prévoit, infraction par infraction.</p>
+
+        <div class="card beaufort reveal" id="beaufort">
+          <div class="bf-head">
+            <h3>Échelle de Beaufort du Code pénal</h3>
+            <p>Les infractions classées de 1 à 8 par peine maximale croissante, calculées à partir des fiches ci-dessous. Cliquez sur une ligne pour lire la fiche.</p>
+          </div>
+        </div>
+
+        <div class="grid" id="lois" style="margin-top: 18px;"></div>
+        <p class="small muted" id="loi-note" style="margin-top: 14px;"></p>
+      </div>
+    </section>
+
+    <!-- ======================= INSTAGRAM ======================= -->
+    <section id="insta">
+      <div class="wrap">
+        <div class="section-title"><span class="tag">Instagram</span><h2>Le bulletin continue sur Instagram</h2></div>
+        <p class="lead">Suivez <a id="insta-link" href="https://www.instagram.com/maruemonrespect/" target="_blank" rel="noopener">@maruemonrespect</a> : la météo de la rue, tous les jours, dans votre fil. Voici ce qu'on y poste.</p>
+        <div class="posts" id="posts"></div>
+        <p style="margin-top: 22px;"><a class="btn" id="insta-btn" href="https://www.instagram.com/maruemonrespect/" target="_blank" rel="noopener">Suivre @maruemonrespect</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>Campagne réalisée par des élèves de terminale, EMC, 2026.</strong> Le second degré est dans la forme ; les chiffres, les lois et les conseils sont sérieux et sourcés.</p>
+      <p><a class="btn ghost" href="../index.html">Voir les autres versions</a> <a class="insta" href="https://www.instagram.com/maruemonrespect/" target="_blank" rel="noopener">@maruemonrespect</a></p>
+      <h3>Sources</h3>
+      <div id="sources"></div>
+    </div>
+  </footer>
+
+  <script src="../shared/charts.js"></script>
+  <script src="../shared/data.js"></script>
+  <script src="../shared/render.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var D = window.MRMR, esc = Charts.esc, $ = function (id) { return document.getElementById(id); };
+
+    /* Paramètres de test : ?static force l'affichage des .reveal ; ?theme=dark force le mode sombre */
+    if (/[?&]static/.test(location.search)) document.documentElement.classList.add('static');
+    var themeParam = /[?&]theme=(dark|light)/.exec(location.search);
+    if (themeParam) document.documentElement.setAttribute('data-theme', themeParam[1]);
+
+    /* Accès aux données : échouer bruyamment si un id manque (pas de repli silencieux) */
+    function stat(id) { var s = D.stats[id]; if (!s) throw new Error('Stat manquante : ' + id); return s; }
+    function serie(id) { var s = D.series[id]; if (!s) throw new Error('Série manquante : ' + id); return s; }
+    function item(serieId, label) {
+      var s = serie(serieId), found = null;
+      s.items.forEach(function (it) { if (it.label === label) found = it; });
+      if (!found) throw new Error('Item manquant : ' + serieId + ' / ' + label);
+      return found;
+    }
+    function fmtNum(v) { return Number(v).toLocaleString('fr-FR'); }
+
+    /* ---------- Icônes météo : géométrie seule, aucun texte ---------- */
+    var CLOUD = 'M20 46h26a9 9 0 0 0 1-18 13 13 0 0 0-25-3 10 10 0 0 0-2 21z';
+    var ICONS = {
+      sun: '<circle cx="32" cy="32" r="11"/><path d="M32 8v7M32 49v7M8 32h7M49 32h7M15 15l5 5M44 44l5 5M15 49l5-5M44 20l5-5"/>',
+      cloud: '<path d="' + CLOUD + '"/>',
+      rain: '<path d="' + CLOUD.replace('46', '38') + '"/><path d="M24 46l-3 8M34 46l-3 8M44 46l-3 8"/>',
+      storm: '<path d="' + CLOUD.replace('46', '36') + '"/><path d="M34 36l-7 12h7l-4 11 11-15h-7l4-8z" fill="currentColor" stroke="none"/>',
+      wind: '<path d="M8 24h30a6 6 0 1 0-6-6M8 34h40a6 6 0 1 1-6 6M8 44h22a5 5 0 1 1-5 5"/>',
+      fog: '<path d="' + CLOUD.replace('46', '34') + '"/><path d="M14 44h36M18 52h28M24 60h16"/>',
+      umbrella: '<path d="M8 32a24 24 0 0 1 48 0zM32 8v4M32 32v18a5 5 0 0 1-10 0"/><path d="M8 32q6-6 12 0q6-6 12 0q6-6 12 0q6-6 12 0" fill="none"/>',
+      suncloud: '<circle cx="44" cy="20" r="8"/><path d="M44 4v5M58 20h-5M54 10l-3 3M54 30l-3-3M44 36v-5"/><path d="M14 54h24a8 8 0 0 0 1-16 11 11 0 0 0-22-2 9 9 0 0 0-3 18z" fill="var(--card)"/>'
+    };
+    function icon(name) {
+      if (!ICONS[name]) throw new Error('Icône inconnue : ' + name);
+      return '<svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>';
+    }
+    document.querySelectorAll('[data-icon]').forEach(function (el) { el.innerHTML = icon(el.getAttribute('data-icon')); });
+
+    /* Compteur avec séparateur de milliers (Charts.counter n'en met pas) */
+    var STATIC = document.documentElement.classList.contains('static');
+    function counter(el, value, suffix) {
+      el.innerHTML = '<span class="n">0</span> <span class="unit">' + esc(suffix) + '</span>';
+      var n = el.querySelector('.n');
+      if (STATIC) { n.textContent = fmtNum(value); return; }
+      Charts.onReveal(el, function () {
+        var start = null, dur = 1400;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur), eased = 1 - Math.pow(1 - p, 3);
+          n.textContent = fmtNum(Math.round(value * eased));
+          if (p < 1) requestAnimationFrame(step); else n.textContent = fmtNum(value);
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    /* ---------- Date du bulletin ---------- */
+    var d = new Date();
+    var dateTxt = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    $('date').textContent = 'Bulletin du ' + dateTxt;
+
+    /* ---------- Indices du jour ---------- */
+    var s86 = stat('s86'), s61 = stat('s61'), s20 = stat('s20'), s3900 = stat('s3900'), s3m = stat('s3m');
+    var sifflee = item('actes', 'Sifflée');
+    var INDICES = [
+      { icon: 'wind', label: 'Risque de sifflements', value: s86.value, suffix: '%', sub: 'au moins une fois dans la vie',
+        expl: s86.value + ' % ' + s86.label + ' Le sifflement est la forme la plus connue, mais l\'indice couvre tout : regards insistants, remarques, suivi, contact imposé. Rien que les sifflements, au cours de la vie : ' + sifflee.value + ' %.',
+        source: s86.source },
+      { icon: 'rain', label: 'Taux d\'humidité relou, moins de 25 ans', value: s61.value, suffix: '%', sub: 'sur les 12 derniers mois',
+        expl: s61.value + ' % ' + s61.label + ' Plus on est jeune, plus l\'air est chargé : c\'est la tranche d\'âge la plus exposée de l\'enquête.',
+        source: s61.source },
+      { icon: 'umbrella', label: 'Pression des témoins', value: s20.value, suffix: '% d\'aide', sub: 'des victimes aidées par un témoin',
+        expl: 'Seulement ' + s20.value + ' % ' + s20.label + ' Les autres ont traversé l\'averse seules, souvent au milieu de la foule. Un parapluie, ça se partage : voir la méthode des 5D plus bas.',
+        source: s20.source },
+      { icon: 'fog', label: 'Visibilité judiciaire', value: s3900.value, suffix: 'infractions', sub: 'pour ' + s3m.value + ' millions de femmes touchées chaque année',
+        expl: fmtNum(s3900.value) + ' ' + s3900.label + ' Brouillard épais : la quasi-totalité des faits ne laissent aucune trace dans les statistiques de police.',
+        source: s3900.source }
+    ];
+    var indicesEl = $('indices');
+    INDICES.forEach(function (ind) {
+      var card = Render.el('<article class="indice card reveal">'
+        + '<div class="ico">' + icon(ind.icon) + '</div>'
+        + '<div class="ind-label">' + esc(ind.label) + '</div>'
+        + '<div class="ind-num"></div>'
+        + '<div class="ind-sub">' + esc(ind.sub) + '</div>'
+        + '<details class="expl"><summary>Le présentateur précise</summary><p>' + esc(ind.expl) + '</p><div class="source">' + Charts.sourceHtml(ind.source) + '</div></details>'
+        + '</article>');
+      indicesEl.appendChild(card);
+      counter(card.querySelector('.ind-num'), ind.value, ind.suffix);
+    });
+
+    /* ---------- Bandeau défilant ---------- */
+    var tickerItems = [
+      D.campagne.nom, '@' + D.campagne.instagram,
+      'Risque de sifflements : ' + s86.value + ' % au cours de la vie',
+      'Moins de 25 ans : ' + s61.value + ' % sur 12 mois',
+      'Témoins : ' + s20.value + ' % des victimes aidées',
+      fmtNum(s3900.value) + ' infractions enregistrées en 2025 pour ' + s3m.value + ' millions de femmes touchées par an',
+      'Ce n\'est pas la météo qu\'il faut changer, c\'est le climat',
+      'Siffler dans la rue est une infraction depuis 2018'
+    ];
+    var tickerHtml = tickerItems.map(function (t) { return '<span>' + esc(t) + ' ·</span>'; }).join('');
+    $('ticker').innerHTML = '<span class="seq">' + tickerHtml + '</span><span class="seq dup">' + tickerHtml + '</span>';
+
+    /* ---------- Prévisions par zone ---------- */
+    var s38 = stat('s38'), s63 = stat('s63'), s74 = stat('s74');
+    var rueVie = item('lieux', 'Au moins une, rue');
+    var h2024 = item('virage', 'Hommes 20-24 ans'), f2024 = item('virage', 'Femmes 20-24 ans');
+    var hTous = item('virage', 'Hommes, tous (20-69)'), fTous = item('virage', 'Femmes, toutes (20-69)');
+    var ZONES = [
+      { icon: 'cloud', nom: 'Rue', value: rueVie.value + ' %', sub: 'des femmes ont déjà subi une agression sexuelle dans la rue (au cours de la vie)',
+        bulletin: 'Ciel couvert toute la journée, averses de remarques en fin d\'après-midi. Le vent tourne dès qu\'on marche seule.',
+        note: 'Et pour l\'ensemble des atteintes (regards, sifflements, suivi…), on monte à ' + s86.value + ' % au cours de la vie.', source: serie('lieux').source },
+      { icon: 'storm', nom: 'Transports', value: s38.value + ' %', sub: 'des femmes ont déjà subi une agression sexuelle dans les transports en commun, contre ' + rueVie.value + ' % dans la rue',
+        bulletin: 'Alerte orange sur la ligne 13. C\'est une image : toutes les lignes, tous les bus et tous les quais sont concernés, surtout aux heures de pointe.',
+        note: 'Le wagon bondé n\'est pas une excuse : depuis août 2026, les transports sont une circonstance aggravante.', source: s38.source },
+      { icon: 'rain', nom: 'Lycée', value: s63.value + ' %', sub: 'des lycéennes et étudiantes ont été victimes dans les lieux publics au cours des 12 derniers mois',
+        bulletin: 'Dépression persistante à la sortie des cours. Précipitations de commentaires sur le chemin du bus.',
+        note: 'En Île-de-France : ' + s74.value + ' % ' + s74.label, source: s63.source },
+      { icon: 'suncloud', nom: 'Et pour les hommes', value: h2024.value + ' %', sub: 'des hommes de 20 à 24 ans ont subi au moins un fait de violence dans l\'espace public sur 12 mois, contre ' + f2024.value + ' % des femmes du même âge',
+        bulletin: 'Éclaircies. Il pleut aussi sur les hommes, à peu près moitié moins fort, et rarement de la même pluie.',
+        note: 'Tous âges confondus (20-69 ans) : ' + hTous.value + ' % des hommes, ' + fTous.value + ' % des femmes.', source: serie('virage').source }
+    ];
+    var zonesEl = $('zones-grid');
+    ZONES.forEach(function (z) {
+      zonesEl.appendChild(Render.el('<article class="card zone reveal">'
+        + '<div class="zone-head"><div class="ico">' + icon(z.icon) + '</div><h3>' + esc(z.nom) + '</h3></div>'
+        + '<div class="zone-num">' + esc(z.value) + '</div>'
+        + '<div class="zone-sub">' + esc(z.sub) + '</div>'
+        + '<p class="zone-bulletin">' + esc(z.bulletin) + '</p>'
+        + '<p class="note">' + esc(z.note) + '</p>'
+        + '<div class="source">' + Charts.sourceHtml(z.source) + '</div>'
+        + '</article>'));
+    });
+
+    /* ---------- Vigilance ---------- */
+    var NIVEAUX = [
+      { cls: 'vert', nom: 'Vigilance verte', min: 0 },
+      { cls: 'jaune', nom: 'Vigilance jaune', min: 10 },
+      { cls: 'orange', nom: 'Vigilance orange', min: 25 },
+      { cls: 'rouge', nom: 'Vigilance rouge', min: 50 }
+    ];
+    function niveau(v) { var n = NIVEAUX[0]; NIVEAUX.forEach(function (x) { if (v >= x.min) n = x; }); return n; }
+    var PROFILS = [
+      { id: 'fille17', btn: 'Je suis une fille de 17 ans', serie: 'age', label: 'Moins de 25 ans',
+        phrase: function (it) { return it.value + ' % des femmes de moins de 25 ans ont subi au moins une atteinte dans un lieu public au cours des 12 derniers mois.'; },
+        note: 'L\'enquête ne donne pas de chiffre pour « 17 ans » précisément : on affiche la tranche la plus proche, « moins de 25 ans ». Pour les lycéennes et étudiantes, la même enquête donne ' + s63.value + ' %.' },
+      { id: 'f50', btn: 'J\'ai 50 ans', serie: 'age', label: '50-64 ans',
+        phrase: function (it) { return it.value + ' % des femmes de 50 à 64 ans ont subi au moins une atteinte dans un lieu public au cours des 12 derniers mois.'; },
+        note: 'Tranche la plus proche dans l\'enquête : 50-64 ans. Le ciel se dégage avec l\'âge, mais il ne se dégage jamais tout à fait.' },
+      { id: 'garcon', btn: 'Je suis un garçon', serie: 'virage', label: 'Hommes 20-24 ans',
+        phrase: function (it) { return it.value + ' % des hommes de 20 à 24 ans ont subi au moins un fait de violence dans l\'espace public au cours des 12 derniers mois.'; },
+        note: 'L\'enquête Virage commence à 20 ans : pour un lycéen, on affiche la tranche la plus proche, hommes de 20 à 24 ans. Les femmes du même âge sont à ' + f2024.value + ' %.' }
+    ];
+    var profilsEl = $('profils'), vigiEl = $('vigi');
+    PROFILS.forEach(function (p) {
+      var b = Render.el('<button type="button" class="btn" aria-pressed="false">' + esc(p.btn) + '</button>');
+      b.addEventListener('click', function () {
+        profilsEl.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        var it = item(p.serie, p.label), n = niveau(it.value), src = serie(p.serie).source;
+        vigiEl.className = 'vigi reveal in ' + n.cls;
+        vigiEl.innerHTML = '<div class="vigi-niveau"><span class="pastille" aria-hidden="true"></span><span class="txt">' + esc(n.nom) + '</span></div>'
+          + '<div class="vigi-num">' + esc(Charts.fmt(it.value, '%')) + '</div>'
+          + '<p class="vigi-phrase">' + esc(p.phrase(it)) + '</p>'
+          + '<p class="vigi-note">' + esc(p.note) + '</p>'
+          + '<div class="source">' + Charts.sourceHtml(src) + '</div>';
+      });
+      profilsEl.appendChild(b);
+    });
+    $('echelle').innerHTML = NIVEAUX.map(function (n, i) {
+      var borne = i < NIVEAUX.length - 1 ? n.min + ' à ' + (NIVEAUX[i + 1].min - 1) + ' %' : n.min + ' % et plus';
+      return '<span><i style="background: var(--' + n.cls + ')"></i>' + esc(n.nom.replace('Vigilance ', '')) + ' : ' + esc(borne) + '</span>';
+    }).join('') + '<span>Seuils choisis par la campagne, pas par Météo-France</span>';
+
+    /* ---------- Tendance ---------- */
+    var outrage = serie('outrage');
+    var first = outrage.items[0], last = outrage.items[outrage.items.length - 1];
+    counter($('tendance-num'), last.value, '');
+    $('tendance-label').textContent = 'infractions d\'outrage sexiste et sexuel enregistrées par la police en ' + last.label + ', contre ' + fmtNum(first.value) + ' en ' + first.label + '.';
+    Render.charts($('tendance-chart'), ['outrage']);
+
+    /* ---------- Chiffres ---------- */
+    Render.bigStats($('stats-grid'), ['s86', 's61', 's81']);
+    Render.bigStats($('banal-grid'), ['s86banal', 's86temoins']);
+    $('contraste').innerHTML = '<div><div class="num bleu">' + esc(s3m.value + ' millions') + '</div><p style="margin: 6px 0 0;">' + esc(s3m.label) + '</p><div class="source">' + Charts.sourceHtml(s3m.source) + '</div></div>'
+      + '<div class="vs" aria-hidden="true">contre</div>'
+      + '<div><div class="num">' + esc(fmtNum(s3900.value)) + '</div><p style="margin: 6px 0 0;">' + esc(s3900.label) + '</p><div class="source">' + Charts.sourceHtml(s3900.source) + '</div></div>';
+    Render.charts($('charts-grid'), ['age', 'actes', 'virage', 'lieux', 'temoins', 'evitement']);
+    Render.charts($('geneve-chart'), ['geneve']);
+
+    /* ---------- Agir ---------- */
+    Render.actions($('actions-victimes'), 'victimes');
+    Render.actions($('actions-temoins'), 'temoins');
+    Render.actions($('actions-tous'), 'tous');
+    Render.contacts($('contacts'));
+    var dispEl = $('dispositifs');
+    D.dispositifs.forEach(function (x) {
+      dispEl.appendChild(Render.el('<a class="card dispositif reveal" href="' + esc(x.url) + '" target="_blank" rel="noopener" style="text-decoration: none; color: inherit;"><h3>' + esc(x.nom) + '</h3><p>' + esc(x.texte) + '</p></a>'));
+    });
+
+    /* ---------- Loi : échelle de Beaufort calculée depuis MRMR.lois ---------- */
+    function peineScore(l) {
+      var p = l.peine, m, mois = 0, amende = 0;
+      if ((m = /(\d+)\s*ans?\b/.exec(p))) mois = Number(m[1]) * 12;
+      else if ((m = /(\d+)\s*mois/.exec(p))) mois = Number(m[1]);
+      if ((m = /(\d[\d\s ]*)€/.exec(p))) amende = Number(m[1].replace(/[\s ]/g, ''));
+      return { mois: mois, amende: amende };
+    }
+    var VENTS = ['Légère brise', 'Petite brise', 'Jolie brise', 'Bonne brise', 'Vent frais', 'Grand frais', 'Coup de vent', 'Tempête'];
+    var classement = Object.keys(D.lois).map(function (id, i) {
+      var l = D.lois[id], sc = peineScore(l);
+      return { id: id, loi: l, mois: sc.mois, amende: sc.amende, ordre: i };
+    }).sort(function (a, b) { return (a.mois - b.mois) || (a.amende - b.amende) || (a.ordre - b.ordre); });
+    if (classement.length !== VENTS.length) throw new Error('Échelle de Beaufort : ' + classement.length + ' infractions pour ' + VENTS.length + ' niveaux');
+    var maxMois = classement[classement.length - 1].mois, bfEl = $('beaufort');
+    classement.forEach(function (c, i) {
+      var pct = Math.max(4, Math.round(100 * c.mois / maxMois));
+      bfEl.appendChild(Render.el('<a class="bf-row" href="#loi-' + esc(c.id) + '">'
+        + '<div class="force">' + (i + 1) + '</div>'
+        + '<div><div class="vent">' + esc(VENTS[i]) + ' · ' + esc(c.loi.nature) + '</div><div class="nom">' + esc(c.loi.nom) + '</div></div>'
+        + '<div class="peine">' + esc(c.loi.peine) + '</div>'
+        + '<div class="souffle" aria-hidden="true"><i style="width:' + pct + '%"></i></div>'
+        + '</a>'));
+    });
+    Render.lois($('lois'));
+    $('loi-note').textContent = D.loiNote;
+
+    /* ---------- Instagram ---------- */
+    $('insta-link').href = D.campagne.instagramUrl; $('insta-link').textContent = '@' + D.campagne.instagram;
+    $('insta-btn').href = D.campagne.instagramUrl; $('insta-btn').textContent = 'Suivre @' + D.campagne.instagram;
+    var POSTS = [
+      { icon: 'sun', titre: 'Le bulletin du jour', texte: 'Chaque matin, une story « Météo de la rue » avec un seul indice et sa source : « Risque de sifflements : ' + s86.value + ' % ». Même mise en page qu\'un vrai bulletin, même ton de présentateur, et une phrase pour rappeler que ce n\'est pas normal.' },
+      { icon: 'storm', titre: 'Alerte orange du week-end', texte: 'Le vendredi soir, un carrousel « alerte orange » : les 5D pour les témoins (Distraire, Déléguer, Documenter, Diriger, Dialoguer), un geste par slide, pour que la soirée de quelqu\'un ne tourne pas à l\'orage.' },
+      { icon: 'wind', titre: 'La tendance du mois', texte: 'Une fois par mois, la courbe des températures : les plaintes pour outrage sexiste qui montent (' + fmtNum(first.value) + ' en ' + first.label + ', ' + fmtNum(last.value) + ' en ' + last.label + '), et le rappel que ça monte parce qu\'on ose enfin les déposer.' }
+    ];
+    var postsEl = $('posts');
+    POSTS.forEach(function (p) {
+      postsEl.appendChild(Render.el('<article class="card post reveal"><div class="ico">' + icon(p.icon) + '</div><h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></article>'));
+    });
+
+    /* ---------- Pied de page ---------- */
+    Render.sources($('sources'));
+
+    Charts.revealAll();
+  })();
+  </script>
+</body>
+</html>

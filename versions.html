@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma rue, mon respect — les trois versions</title>
+  <meta name="description" content="Campagne lycéenne contre le harcèlement de rue : choisissez une version du site.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/base.css">
+  <style>
+    body { background: var(--bg); }
+    .hero { padding: 72px 0 32px; text-align: center; }
+    .hero h1 { margin-bottom: 8px; }
+    .choices { padding: 16px 0 80px; }
+    .choice { text-decoration: none; color: inherit; display: grid; gap: 12px; transition: transform 0.15s ease; }
+    .choice:hover { transform: translateY(-4px); }
+    .choice img { width: 120px; height: 120px; margin: 0 auto; }
+    .choice h2 { font-size: 1.5rem; margin: 0; }
+    .choice .pitch { color: var(--ink-2); margin: 0; }
+    .choice .go { color: var(--accent); font-weight: 800; }
+    .note { max-width: 60ch; margin: 24px auto 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero wrap">
+      <h1>Ma rue, mon respect</h1>
+      <p class="lead" style="margin: 0 auto;">Trois versions du site, même fond, trois tons. La version retenue est « Le guide du parfait relou » (page d'accueil) ; les deux autres restent consultables ici.</p>
+    </header>
+    <section class="choices wrap">
+      <div class="grid grid-3">
+        <a class="card choice" href="index.html">
+          <img src="shared/img/megaphone.svg" alt="">
+          <h2>Le guide du parfait relou</h2>
+          <p class="pitch">Un faux mode d'emploi de la drague de rue, démonté leçon par leçon par les chiffres et la loi.</p>
+          <span class="go">Ouvrir cette version →</span>
+        </a>
+        <a class="card choice" href="bingo/index.html">
+          <img src="shared/img/bingo.svg" alt="">
+          <h2>Bingo du harcèlement de rue</h2>
+          <p class="pitch">Cochez les phrases que vous avez déjà entendues. Spoiler : on fait vite bingo, et ce n'est pas un jeu.</p>
+          <span class="go">Ouvrir cette version →</span>
+        </a>
+        <a class="card choice" href="meteo/index.html">
+          <img src="shared/img/meteo.svg" alt="">
+          <h2>Météo de la rue</h2>
+          <p class="pitch">Le bulletin que personne ne devrait avoir à consulter avant de sortir. Risque de sifflements : 86 %.</p>
+          <span class="go">Ouvrir cette version →</span>
+        </a>
+      </div>
+      <p class="note"><a href="index.html">← Retour à la page d'accueil</a></p>
+    </section>
+  </main>
+</body>
+</html>

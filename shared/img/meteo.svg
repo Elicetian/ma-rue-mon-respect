@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Un nuage d'orage avec un éclair">
+  <circle cx="120" cy="120" r="110" fill="#3a506b" opacity="0.15"/>
+  <circle cx="150" cy="70" r="30" fill="#f4b942"/>
+  <path d="M70 140 a30 30 0 0 1 10 -58 a40 40 0 0 1 76 -6 a28 28 0 0 1 24 64 z" fill="#5c677d"/>
+  <path d="M120 140 l-18 38 h18 l-10 36 l34 -50 h-18 l12 -24z" fill="#f4b942"/>
+  <g stroke="#17a398" stroke-width="6" stroke-linecap="round"><line x1="70" y1="160" x2="60" y2="180"/><line x1="170" y1="160" x2="160" y2="180"/><line x1="90" y1="190" x2="80" y2="210"/></g>
+</svg>

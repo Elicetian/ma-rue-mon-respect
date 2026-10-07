@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Une rue de nuit, une personne marche seule, une silhouette la suit">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2541"/><stop offset="1" stop-color="#3a506b"/></linearGradient></defs>
+  <rect width="640" height="360" fill="url(#sky)"/>
+  <circle cx="540" cy="70" r="28" fill="#f4e285"/>
+  <g fill="#0b132b">
+    <rect x="0" y="120" width="90" height="140"/><rect x="100" y="80" width="70" height="180"/><rect x="180" y="140" width="110" height="120"/>
+    <rect x="300" y="100" width="60" height="160"/><rect x="370" y="150" width="130" height="110"/><rect x="510" y="110" width="130" height="150"/>
+  </g>
+  <g fill="#f4e285" opacity="0.8">
+    <rect x="15" y="140" width="14" height="18"/><rect x="45" y="140" width="14" height="18"/><rect x="115" y="100" width="12" height="16"/><rect x="140" y="130" width="12" height="16"/>
+    <rect x="320" y="120" width="12" height="16"/><rect x="400" y="170" width="14" height="18"/><rect x="540" y="130" width="14" height="18"/><rect x="590" y="160" width="14" height="18"/>
+  </g>
+  <rect x="0" y="260" width="640" height="100" fill="#2b2d42"/>
+  <rect x="0" y="258" width="640" height="6" fill="#8d99ae"/>
+  <g stroke="#f4e285" stroke-width="4" stroke-dasharray="24 18"><line x1="0" y1="312" x2="640" y2="312"/></g>
+  <!-- lampadaire -->
+  <rect x="438" y="150" width="6" height="110" fill="#8d99ae"/>
+  <circle cx="441" cy="148" r="12" fill="#f4e285"/>
+  <ellipse cx="441" cy="262" rx="90" ry="14" fill="#f4e285" opacity="0.18"/>
+  <!-- personne qui marche -->
+  <g transform="translate(410 180)">
+    <circle cx="0" cy="0" r="14" fill="#f7c59f"/>
+    <path d="M-10 10 h20 l6 44 h-32 z" fill="#e4572e"/>
+    <rect x="-9" y="54" width="8" height="30" rx="3" fill="#1b1a17"/><rect x="2" y="54" width="8" height="30" rx="3" fill="#1b1a17"/>
+    <rect x="-20" y="18" width="7" height="26" rx="3" fill="#e4572e"/><rect x="13" y="18" width="7" height="26" rx="3" fill="#e4572e"/>
+    <path d="M-14 -6 q14 -16 28 0 v-8 q-14 -14 -28 0z" fill="#5c3a21"/>
+  </g>
+  <!-- silhouette qui suit -->
+  <g transform="translate(300 186)" fill="#3a506b" opacity="0.95">
+    <circle cx="0" cy="0" r="15"/>
+    <path d="M-12 12 h24 l8 46 h-40 z"/>
+    <rect x="-10" y="58" width="9" height="28" rx="3"/><rect x="2" y="58" width="9" height="28" rx="3"/>
+    <rect x="-22" y="18" width="8" height="30" rx="3"/><rect x="14" y="18" width="8" height="30" rx="3"/>
+  </g>
+</svg>
